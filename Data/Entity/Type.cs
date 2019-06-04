@@ -1,4 +1,4 @@
-﻿namespace Data
+﻿namespace RightMove.Data
 {
     public enum Type
     {

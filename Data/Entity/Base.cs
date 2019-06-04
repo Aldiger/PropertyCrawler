@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Data
+namespace RightMove.Data
 {
     public abstract class Base
     {

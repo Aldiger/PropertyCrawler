@@ -10,8 +10,15 @@
 /RightMoveWeb/obj
 /Services/obj
 /Services/bin/Debug/netcoreapp2.2
-/RightMoveWeb/ScaffoldingReadme.txt
+/.vs/RightMove/v16/Server/sqlite3/storage.ide-wal
+/.vs/RightMove/v16/Server/sqlite3/storage.ide-shm
+/.vs/RightMove/v16/Server/sqlite3/storage.ide
+/.vs/RightMove/v16/Server/sqlite3/db.lock
+/.vs/RightMove/v16/.suo
+/.vs/RightMove/DesignTimeBuild/.dtbcache
+/.vs/RightMove/config/applicationhost.config
 /RightMoveWeb/RightMoveWeb.csproj.user
+/RightMoveWeb/ScaffoldingReadme.txt
 /RightMoveWeb/bin/Debug/netcoreapp2.2/RightMoveWeb.Views.pdb
 /RightMoveWeb/bin/Debug/netcoreapp2.2/RightMoveWeb.Views.dll
 /RightMoveWeb/bin/Debug/netcoreapp2.2/RightMoveWeb.runtimeconfig.json
@@ -21,10 +28,3 @@
 /RightMoveWeb/bin/Debug/netcoreapp2.2/RightMoveWeb.deps.json
 /RightMoveWeb/bin/Debug/netcoreapp2.2/RightMove.Data.pdb
 /RightMoveWeb/bin/Debug/netcoreapp2.2/RightMove.Data.dll
-/.vs/RightMove/v16/Server/sqlite3/storage.ide
-/.vs/RightMove/v16/Server/sqlite3/db.lock
-/.vs/RightMove/v16/.suo
-/.vs/RightMove/DesignTimeBuild/.dtbcache
-/.vs/RightMove/config/applicationhost.config
-/.vs/RightMove/v16/Server/sqlite3/storage.ide-shm
-/.vs/RightMove/v16/Server/sqlite3/storage.ide-wal
