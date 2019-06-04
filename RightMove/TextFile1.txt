@@ -1,0 +1,29 @@
+﻿Help Links:
+ https://en.wikipedia.org/wiki/List_of_postcode_districts_in_the_United_Kingdom
+
+
+ //use postal code
+ https://www.rightmove.co.uk/property-for-sale/search.html
+ ?locationIdentifier=OUTCODE%5E1
+ &numberOfPropertiesPerPage=24
+ &radius=0.0
+ &sortType=2
+ &index=0
+ &includeSSTC=false
+ &viewType=LIST
+ &channel=BUY
+ &areaSizeUnit=sqft
+ &currencyCode=GBP
+ &isFetching=false
+ &searchLocation=Al10
+ &useLocationIdentifier=false
+ &previousSearchLocation=null
+
+ get outcode
+ https://www.rightmove.co.uk/property-for-sale/find.html
+ ?locationIdentifier=OUTCODE%5E35
+ &insId=1
+ &numberOfPropertiesPerPage=24
+ &areaSizeUnit=sqft
+
+ https://www.rightmove.co.uk/property-for-sale/search.html?searchLocation=BD19&locationIdentifier=&useLocationIdentifier=false&buy=For+sale

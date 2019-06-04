@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RightMove", "RightMove\RightMove.csproj", "{B71598E1-8FE1-4287-874F-AB268FEE7DA7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{22FBFA29-421A-4014-BAE6-5C9D95BC96C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightMoveWeb", "RightMoveWeb\RightMoveWeb.csproj", "{FC28AF3D-4F28-4E1D-8B55-8F6F39A9D826}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B71598E1-8FE1-4287-874F-AB268FEE7DA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B71598E1-8FE1-4287-874F-AB268FEE7DA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B71598E1-8FE1-4287-874F-AB268FEE7DA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B71598E1-8FE1-4287-874F-AB268FEE7DA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22FBFA29-421A-4014-BAE6-5C9D95BC96C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22FBFA29-421A-4014-BAE6-5C9D95BC96C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22FBFA29-421A-4014-BAE6-5C9D95BC96C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22FBFA29-421A-4014-BAE6-5C9D95BC96C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC28AF3D-4F28-4E1D-8B55-8F6F39A9D826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC28AF3D-4F28-4E1D-8B55-8F6F39A9D826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC28AF3D-4F28-4E1D-8B55-8F6F39A9D826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC28AF3D-4F28-4E1D-8B55-8F6F39A9D826}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6A842E51-1F07-49EE-8675-0E0A93B21B8E}
+	EndGlobalSection
+EndGlobal

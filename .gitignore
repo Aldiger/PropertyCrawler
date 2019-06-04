@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/RightMove/v15
+/Data/bin/Debug/netcoreapp2.2
+/Data/obj
+/RightMove/bin/Debug/netcoreapp2.2
+/RightMove/obj
+/RightMoveWeb/obj
+/Services/obj
+/Services/bin/Debug/netcoreapp2.2
