@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Data
+namespace RightMove.Data
 {
     public class Portal : Base
     {
