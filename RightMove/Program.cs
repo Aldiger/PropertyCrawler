@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -13,7 +14,9 @@ namespace RightMove
 
         static void Main(string[] args)
         {
-            var code = "AB10";
+
+            
+                        var code = "AB10";
             var basedUrl = "https://www.rightmove.co.uk/property-for-sale/";
             var getOpCode = $"search.html?searchLocation={code}&locationIdentifier=&useLocationIdentifier=false&buy=For+sale";
             var opCode = "";
@@ -24,6 +27,16 @@ namespace RightMove
             var r = codes.Select(x=>x.Id).Except(existing).ToList();
             codes = codes.Where(x => r.Contains(x.Id)).ToList();
             var take = 400;
+            //var partitioner = Partitioner.Create(codes);
+            //var parallelOptions = new ParallelOptions
+            //{
+            //    MaxDegreeOfParallelism = Environment.ProcessorCount
+            //};
+
+            //Parallel.ForEach(partitioner, parallelOptions, (listItem, loopState) =>
+            //{
+            //    //Do something
+            //});
             Parallel.Invoke(
 
              () =>

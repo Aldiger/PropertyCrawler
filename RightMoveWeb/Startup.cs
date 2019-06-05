@@ -13,6 +13,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RightMove.Data.Repositories;
+using Hangfire;
+using Hangfire.Dashboard;
+using Hangfire.Annotations;
+using RightMoveWeb.Services;
 
 namespace RightMoveWeb
 {
@@ -49,11 +53,15 @@ namespace RightMoveWeb
             //    .AddEntityFrameworkStores<ApplicationDbContext>()
             //    .AddDefaultUI()
             //    .AddDefaultTokenProviders();
+            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddHangfireServer();
 
             services.AddTransient<IPostalCodeRepository, PostalCodeRepository>();
             services.AddCloudscribePagination();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddScoped<IJobs, Jobs>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,19 +78,34 @@ namespace RightMoveWeb
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseHangfireServer();
+            app.UseHangfireDashboard("/hangfire", new DashboardOptions
+            {
+                Authorization = new[] { new HangfireAuthorizationFilter() },
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+    }
+
+    public class HangfireAuthorizationFilter: IDashboardAuthorizationFilter
+    {
+        public bool Authorize([NotNull]DashboardContext context)
+        {
+            var httpContext = context.GetHttpContext();
+            return true;//httpContext.User.Identity.IsAuthenticated;
         }
     }
 }
