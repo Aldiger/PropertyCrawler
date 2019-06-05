@@ -22,16 +22,20 @@ namespace RightMoveWeb.Controllers
         }
 
         
-        public IActionResult Index(int? pageNumber)
+        public IActionResult Index(int? pageNumber, string sort)
         {
             if(!pageNumber.HasValue || pageNumber < 1)
             {
                 pageNumber = 1;
             }
+            if (!string.IsNullOrEmpty(sort))
+                ViewData["CurrentSort"] = sort;
+            else
+                ViewData["CurrentSort"] = "";
 
-            var query = _repo.GetAllPostalCodesAsync();
+            var query = _repo.GetAllPostalCodesAsync(sort);
             var totalCount = query.Count();
-            var items = query.OrderBy(x => x.Id)
+            var items = query
                 .Skip((pageNumber.Value - 1) * pagesize)
                 .Take(pagesize)
                 .ToList();

@@ -14,5 +14,7 @@ namespace RightMove.Data.Models
         public string Code { get; set; }
         public string OpCode { get; set; }
 
+        public int Properties { get; set; }
+
     }
 }

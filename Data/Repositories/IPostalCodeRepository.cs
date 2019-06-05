@@ -10,7 +10,7 @@ namespace RightMove.Data.Repositories
 {
     public interface IPostalCodeRepository
     {
-        IQueryable<PostalCodeModel> GetAllPostalCodesAsync();
+        IQueryable<PostalCodeModel> GetAllPostalCodesAsync(string sort);
 
         Task CreatePostalCodeAsync(PostalCodeModel model);
 
@@ -35,28 +35,84 @@ namespace RightMove.Data.Repositories
 
         public async Task<PostalCodeModel> GetById(int? id)
         {
-            return await _context.PostalCodes.Where(a => a.Id == id.Value).Select(x => new PostalCodeModel
+            return await _context.PostalCodes.Include(z => z.Urls).Where(a => a.Id == id.Value).Select(x => new PostalCodeModel
             {
                 Id = x.Id,
                 Active = x.Active,
                 Code = x.Code,
                 DateAdded = x.DateAdded,
                 DateModified = x.DateModified,
-                OpCode = x.OpCode
+                OpCode = x.OpCode,
+                Properties = x.Urls.Count
             }).FirstOrDefaultAsync();
         }
 
-        public IQueryable<PostalCodeModel> GetAllPostalCodesAsync()
+        public IQueryable<PostalCodeModel> GetAllPostalCodesAsync( string sort)
         {
-            return _context.PostalCodes.Where(x=> x.Active==true).Select(x => new PostalCodeModel
+            if (sort == "dcreated")
             {
-                Id = x.Id,
-                Active = x.Active,
-                Code = x.Code,
-                DateAdded = x.DateAdded,
-                DateModified = x.DateModified,
-                OpCode = x.OpCode
-            }).AsQueryable();
+                return _context.PostalCodes.Where(x => x.Active == true).Include(z=> z.Urls).Select(x => new PostalCodeModel
+                {
+                    Id = x.Id,
+                    Active = x.Active,
+                    Code = x.Code,
+                    DateAdded = x.DateAdded,
+                    DateModified = x.DateModified,
+                    OpCode = x.OpCode,
+                    Properties = x.Urls.Count
+
+                }).OrderBy(y => y.DateAdded).AsQueryable();
+            }
+            else if (sort == "dmodified")
+            {
+                return _context.PostalCodes.Where(x => x.Active == true).Include(z => z.Urls).Select(x => new PostalCodeModel
+                {
+                    Id = x.Id,
+                    Active = x.Active,
+                    Code = x.Code,
+                    DateAdded = x.DateAdded,
+                    DateModified = x.DateModified,
+                    OpCode = x.OpCode,
+                    Properties = x.Urls.Count
+                }).OrderBy(y => y.DateModified).AsQueryable();
+            }
+            else if (sort == "code")
+            {
+                return _context.PostalCodes.Where(x => x.Active == true).Include(z => z.Urls).Select(x => new PostalCodeModel
+                {
+                    Id = x.Id,
+                    Active = x.Active,
+                    Code = x.Code,
+                    DateAdded = x.DateAdded,
+                    DateModified = x.DateModified,
+                    OpCode = x.OpCode,
+                    Properties = x.Urls.Count
+                }).OrderBy(y => y.Code).AsQueryable();
+            }
+            else if (sort == "mostProp")
+            {
+                return _context.PostalCodes.Where(x => x.Active == true).Include(z => z.Urls).Select(x => new PostalCodeModel
+                {
+                    Id = x.Id,
+                    Active = x.Active,
+                    Code = x.Code,
+                    DateAdded = x.DateAdded,
+                    DateModified = x.DateModified,
+                    OpCode = x.OpCode,
+                    Properties = x.Urls.Count
+                }).OrderByDescending(y => y.Properties).AsQueryable();
+            }
+            else
+                return _context.PostalCodes.Where(x => x.Active == true).Include(z => z.Urls).Select(x => new PostalCodeModel
+                {
+                    Id = x.Id,
+                    Active = x.Active,
+                    Code = x.Code,
+                    DateAdded = x.DateAdded,
+                    DateModified = x.DateModified,
+                    OpCode = x.OpCode,
+                    Properties = x.Urls.Count
+                }).AsQueryable();
         }
 
         public async Task CreatePostalCodeAsync(PostalCodeModel model)

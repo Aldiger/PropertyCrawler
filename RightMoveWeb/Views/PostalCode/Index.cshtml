@@ -1,33 +1,51 @@
 ﻿@model PagedList<PostalCodeModel>
 
-@{
+    @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    }
 
-<div class="card border-primary mb-5" style="max-width: 70rem;margin-top:30px;">
-    <div class="card-header bg-transparent">
-        <div class="container">
-            <div class="row justify-content-between">
-                <div class="col"><h4>Postal Codes</h4></div>
-                <div class="col text-right"> <a asp-action="Create">Create New</a></div>
-            </div>
+
+
+    <div class="text-right">
+        <div class="btn-group" style="width:90%;">
+            <button class="btn btn-primary dropdown-toggle" style="width:100%;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <p style="font-size:larger;color:white;">Sort&nbsp;&nbsp;&nbsp;<span class="caret" style="font-size:larger;"></span></p>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li> <a class="dropdown-item" asp-action="Index" asp-route-sort="dcreated">Date Created</a></li>
+                <li><a class="dropdown-item" asp-action="Index" asp-route-sort="dmodified">Date Modified</a></li>
+                <li><a class="dropdown-item" asp-action="Index" asp-route-sort="code">Code</a></li>
+                <li><a class="dropdown-item" asp-action="Index" asp-route-sort="mostProp">Most Properties</a></li>
+            </ul>
         </div>
     </div>
-    <div class="card-body ">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Code </th>
-                    <th> Op Code</th>
-                    <th> Date Added</th>
-                    <th> Date Modified</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Items)
-                {
+
+
+    <div class="card border-primary mb-5" style="max-width: 70rem;margin-top:30px;">
+        <div class="card-header bg-transparent">
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col"><h4>Postal Codes</h4></div>
+                    <div class="col text-right"> <a asp-action="Create">Create New</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body ">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Code </th>
+                        <th> Op Code</th>
+                        <th> Date Added</th>
+                        <th> Date Modified</th>
+                        <th>Properties</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.Code)
@@ -42,13 +60,26 @@
                             @Html.DisplayFor(modelItem => item.DateModified)
                         </td>
                         <td>
+                            @Html.DisplayFor(modelItem => item.Properties)
+                        </td>
+                        <td>
                             <a asp-action="Update" asp-route-id="@item.Id">Edit</a> |
                             <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                         </td>
                     </tr>
-                }
-            </tbody>
-        </table>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
+    <div class="col-md-12">
+        <div class="text-center">
+            <cs-pager cs-paging-pagesize="@Model.PageSize"
+                      cs-paging-pagenumber="@Model.CurrentPage"
+                      cs-paging-totalitems="@Model.TotalCount"
+                      cs-pagenumber-param="pageNumber"
+                      asp-controller="PostalCode"
+                      asp-action="Index"></cs-pager>
+        </div>
+    </div>
