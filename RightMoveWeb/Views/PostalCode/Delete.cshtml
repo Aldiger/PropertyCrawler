@@ -1,19 +1,23 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>Are you sure to perform this operation ?</h1>
 
-<form asp-action="Delete" method="post">
-    <div class="col-md-12">
-        <div class="col-md-6 row text-center">
-            <div class="col-md-3">
-                <button type="submit" value="Delete" class="btn btn-primary">Delete</button>
+<div class="card border-danger mb-5" style="max-width: 70rem;margin-top:30px;">
+    <div class="card-header bg-danger text-center"><h4>Are you sure to perform this operation ?</h4> </div>
+    <div class="card-body text-danger">
+        <form asp-action="Delete" method="post">
+            <div class="row">
+                <div class="col" style="margin-left:30px;">
+                    <button type="submit" value="Delete" class="btn btn-danger" style="padding:6px 40px;">Delete</button>
+                </div>
+                <div class="col text-right" style="margin-right:50px;">
+                    <a asp-action="Index" class="btn btn-link">Go Back</a>
+                </div>
             </div>
-            <div class="col-md-3">
-                <a asp-action="Index" class="btn btn-link">Go Back</a>
-            </div>
-        </div>
+        </form>
     </div>
-</form>
+</div>
+
+
+

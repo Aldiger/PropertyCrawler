@@ -5,57 +5,50 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Code
-            </th>
-            <th>
-                Op Code
-            </th>
-            <th>
-                Date Added
-            </th>
-            <th>
-                Date Modified
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Items)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OpCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateAdded)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateModified)
-                </td>
-                <td>
-                    <a asp-action="Update" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-<div class="text-center">
-
-    <cs-pager cs-paging-pagesize="@Model.PageSize"
-              cs-paging-pagenumber="@Model.CurrentPage"
-              cs-paging-totalitems="@Model.TotalCount"
-              cs-pagenumber-param="pageNumber"
-              asp-controller="PostalCode"
-              asp-action="Index"></cs-pager>
+<div class="card border-primary mb-5" style="max-width: 70rem;margin-top:30px;">
+    <div class="card-header bg-transparent">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col"><h4>Postal Codes</h4></div>
+                <div class="col text-right"> <a asp-action="Create">Create New</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body ">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Code </th>
+                    <th> Op Code</th>
+                    <th> Date Added</th>
+                    <th> Date Modified</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Code)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OpCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateAdded)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateModified)
+                        </td>
+                        <td>
+                            <a asp-action="Update" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
+
