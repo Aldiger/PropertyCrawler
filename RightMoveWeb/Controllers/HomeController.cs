@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RightMoveWeb.Models;
 
@@ -10,8 +11,20 @@ namespace RightMoveWeb.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public HomeController(UserManager<IdentityUser> userManager)
         {
+            _userManager = userManager;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+
+                return LocalRedirect("/Identity/Account/Login");
+            }
             return View();
         }
 
