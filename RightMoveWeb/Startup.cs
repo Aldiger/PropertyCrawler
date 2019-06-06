@@ -17,7 +17,6 @@ using Hangfire;
 using Hangfire.Dashboard;
 using Hangfire.Annotations;
 using RightMoveWeb.Services;
-using Microsoft.AspNetCore.Authorization;
 
 namespace RightMoveWeb
 {
