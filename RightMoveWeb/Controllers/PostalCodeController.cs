@@ -10,7 +10,7 @@ using RightMoveWeb.Models;
 
 namespace RightMoveWeb.Controllers
 {
-    [Authorize]
+
     public class PostalCodeController : Controller
     {
         public const int pagesize = 30;
