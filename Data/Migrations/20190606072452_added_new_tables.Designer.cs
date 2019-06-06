@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RightMove.Data;
 
 namespace RightMove.Data.Migrations
 {
     [DbContext(typeof(AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20190606072452_added_new_tables")]
+    partial class added_new_tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +48,7 @@ namespace RightMove.Data.Migrations
                     b.ToTable("Agents");
                 });
 
-            modelBuilder.Entity("RightMove.Data.Image", b =>
+            modelBuilder.Entity("RightMove.Data.Images", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -89,7 +91,7 @@ namespace RightMove.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Portals");
+                    b.ToTable("Portal");
                 });
 
             modelBuilder.Entity("RightMove.Data.PostalCode", b =>
@@ -149,7 +151,7 @@ namespace RightMove.Data.Migrations
 
                     b.HasIndex("AgentId");
 
-                    b.ToTable("Properties");
+                    b.ToTable("Property");
                 });
 
             modelBuilder.Entity("RightMove.Data.Url", b =>
@@ -178,10 +180,10 @@ namespace RightMove.Data.Migrations
 
                     b.HasIndex("PostalCodeId");
 
-                    b.ToTable("Urls");
+                    b.ToTable("Url");
                 });
 
-            modelBuilder.Entity("RightMove.Data.Image", b =>
+            modelBuilder.Entity("RightMove.Data.Images", b =>
                 {
                     b.HasOne("RightMove.Data.Property", "Property")
                         .WithMany("Images")

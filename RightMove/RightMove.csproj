@@ -6,16 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20190603083837_mofied.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Data\RightMove.Data.csproj" />
   </ItemGroup>
 
 </Project>
