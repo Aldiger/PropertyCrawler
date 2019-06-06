@@ -17,6 +17,7 @@ using Hangfire;
 using Hangfire.Dashboard;
 using Hangfire.Annotations;
 using RightMoveWeb.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace RightMoveWeb
 {
@@ -105,7 +106,9 @@ namespace RightMoveWeb
         public bool Authorize([NotNull]DashboardContext context)
         {
             var httpContext = context.GetHttpContext();
+            //var authService = httpContext.RequestServices.GetRequiredService<IAuthorizationService>();
             return true;//httpContext.User.Identity.IsAuthenticated;
         }
+
     }
 }

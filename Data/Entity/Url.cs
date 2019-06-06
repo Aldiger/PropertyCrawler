@@ -8,5 +8,8 @@
 
         public int PostalCodeId { get; set; }
         public int PortalId { get; set; }
+        
+        public virtual PostalCode PostalCode { get; set; }
+        public virtual Portal Portal { get; set; }
     }
 }

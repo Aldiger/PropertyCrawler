@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using RightMove.Data;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -21,12 +22,15 @@ namespace RightMove
             var getOpCode = $"search.html?searchLocation={code}&locationIdentifier=&useLocationIdentifier=false&buy=For+sale";
             var opCode = "";
             //GetPostalcodes();
-            var context = new AppContext();
+            var context = new Data.AppContext(true);
             var codes = context.PostalCodes.Where(x => x.Active && x.Id>1874).OrderBy(x => x.Id).ToList();
-            var existing = context.Url.Where(x => x.Type == (int)Type.Rent).Select(x => x.PostalCodeId).Distinct().ToList();
+            var existing = context.Urls.Where(x => x.Type == (int)Data.Type.Rent).Select(x => x.PostalCodeId).Distinct().ToList();
             var r = codes.Select(x=>x.Id).Except(existing).ToList();
             codes = codes.Where(x => r.Contains(x.Id)).ToList();
             var take = 400;
+
+            var url = context.Urls.OrderBy(x => x.Id).Take(66).ToList();
+            ProcessDetails(url);
             //var partitioner = Partitioner.Create(codes);
             //var parallelOptions = new ParallelOptions
             //{
@@ -37,27 +41,27 @@ namespace RightMove
             //{
             //    //Do something
             //});
-            Parallel.Invoke(
+            //Parallel.Invoke(
 
-             () =>
-             {
-                 ProcessRent(codes.Take(take).ToList());
-             }
+            // () =>
+            // {
+            //     ProcessRent(codes.Take(take).ToList());
+            // }
 
-             //, () =>
-             // {
-             //     ProcessRent(codes.Skip(1 * take).Take(take).ToList());
-             // },
+            // //, () =>
+            // // {
+            // //     ProcessRent(codes.Skip(1 * take).Take(take).ToList());
+            // // },
 
-             //() =>
-             //{
-             //    ProcessRent(codes.Skip(2 * take).Take(take).ToList());
-             //},
-             // () =>
-             //{
-             //    ProcessRent(codes.Skip(3 * take).Take(take).ToList());
-             //}
-            );
+            // //() =>
+            // //{
+            // //    ProcessRent(codes.Skip(2 * take).Take(take).ToList());
+            // //},
+            // // () =>
+            // //{
+            // //    ProcessRent(codes.Skip(3 * take).Take(take).ToList());
+            // //}
+            //);
 
 
             #region proxy test
@@ -125,7 +129,7 @@ namespace RightMove
                 .Replace("&#91;9&#93;", "")
                 ).SelectMany(x => x.Split(",")).SelectMany(x => x.Split(" ")).Where(x => !string.IsNullOrEmpty(x.Trim())).Distinct().ToList();
                 var codes = codes1.Select(x => new PostalCode { Code = x }).ToList();
-                AppContext appContext = new AppContext();
+                Data.AppContext appContext = new Data.AppContext(true);
                 appContext.PostalCodes.AddRange(codes);
                 appContext.SaveChanges();
             }
@@ -136,7 +140,7 @@ namespace RightMove
             var basedUrl = "https://www.rightmove.co.uk/property-for-sale/";
             var getOpCode = $"search.html?searchLocation={code}&locationIdentifier=&useLocationIdentifier=false&buy=For+sale";
             var opCode = "";
-            var context = new AppContext();
+            var context = new Data.AppContext(true);
 
             using (var client = new HttpClient(/*handler: httpClientHandler*/))
             {
@@ -200,7 +204,7 @@ namespace RightMove
                         }
                         linksList = linksList.Distinct().ToList();
                         var urls = linksList.Select(x => new Url { PropertyUrl = x, Type = 1, PortalId = 1, DateModified = DateTime.Now, DateAdded = DateTime.Now, Active = true, PostalCodeId = cod.Id });
-                        context.Url.AddRange(urls);
+                        context.Urls.AddRange(urls);
                         context.SaveChanges();
                     }
                     catch (Exception ex)
@@ -214,6 +218,21 @@ namespace RightMove
             }
         }
 
+        static void ProcessDetails(List<Url> urls)
+        {
+            var basedUrl = "https://www.rightmove.co.uk/property-for-sale/property-56553534.html";
+
+            using (var client = new HttpClient(/*handler: httpClientHandler*/))
+            {
+                client.DefaultRequestHeaders.Add("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3");
+                client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36");
+                client.DefaultRequestHeaders.Add("Accept-Language", "en-US,en;q=0.9,it;q=0.8,sq;q=0.7");
+
+                var links = client.GetStringAsync(basedUrl).Result;
+                HtmlDocument documentlinks = new HtmlDocument();
+                documentlinks.LoadHtml(links);
+            }
+        }
 
         static void ProcessRent(List<PostalCode> codes)
         {
@@ -221,7 +240,7 @@ namespace RightMove
             var basedUrl = "https://www.rightmove.co.uk/property-to-rent/";
             var getOpCode = $"search.html?searchLocation={code}&locationIdentifier=&useLocationIdentifier=false&buy=For+sale";
             var opCode = "";
-            var context = new AppContext();
+            var context = new Data.AppContext(true);
 
             using (var client = new HttpClient(/*handler: httpClientHandler*/))
             {
@@ -292,8 +311,8 @@ namespace RightMove
                             linksList.Add(item.Attributes["href"].Value);
                         }
                         linksList = linksList.Distinct().ToList();
-                        var urls = linksList.Select(x => new Url { PropertyUrl = x, Type = (int)Type.Rent, PortalId = 1, DateModified = DateTime.Now, DateAdded = DateTime.Now, Active = true, PostalCodeId = cod.Id });
-                        context.Url.AddRange(urls);
+                        var urls = linksList.Select(x => new Url { PropertyUrl = x, Type = (int)Data.Type.Rent, PortalId = 1, DateModified = DateTime.Now, DateAdded = DateTime.Now, Active = true, PostalCodeId = cod.Id });
+                        context.Urls.AddRange(urls);
                         context.SaveChanges();
                     }
                     catch (Exception ex)
