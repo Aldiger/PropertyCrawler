@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section css{
+    <link href="~/lib/jquery-chosen/chosen.css" rel="stylesheet" />
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <strong>Search</strong> Postal Codes
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="get" asp-controller="PostalCode" asp-action="Index">
+                    <div class="col-md-12" style="float:right;">
+                        <div class="row">
+                            <div class="col">
+                                <select data-placeholder="Postal Codes" class="form-control" name="postal_code" id="postal_code" multiple" asp-items="@ViewBag.Postal"></select>
+                            </div>
+                            <div class="col">
+                                <select data-placeholder="Sort.." name="sort" id="sort" class="form-control">
+                                    <option value=""></option>
+                                    <option value="dcreated">Date Created</option>
+                                    <option value="dmodified">Date Modified</option>
+                                    <option value="code">Code</option>
+                                    <option value="mostProp">Most Properties</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary px-4" type="submit">Search</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/lib/jquery-chosen/chosen.jquery.min.js"></script>
+    <script>
+        $("#postal_code").chosen();
+    </script>
+}

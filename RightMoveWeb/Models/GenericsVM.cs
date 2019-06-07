@@ -5,6 +5,12 @@ using System.Threading.Tasks;
 
 namespace RightMoveWeb.Models
 {
+
+    public class SelectVm
+    {
+        public int Id { get; set; }
+        public string Text { get; set; }
+    }
     public class PagedList<T>
     {
         public PagedList()

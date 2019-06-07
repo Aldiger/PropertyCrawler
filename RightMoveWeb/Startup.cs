@@ -57,6 +57,7 @@ namespace RightMoveWeb
             services.AddHangfireServer();
 
             services.AddTransient<IPostalCodeRepository, PostalCodeRepository>();
+            
             services.AddCloudscribePagination();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -89,7 +90,7 @@ namespace RightMoveWeb
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-            
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -100,7 +101,7 @@ namespace RightMoveWeb
 
     }
 
-    public class HangfireAuthorizationFilter: IDashboardAuthorizationFilter
+    public class HangfireAuthorizationFilter : IDashboardAuthorizationFilter
     {
         public bool Authorize([NotNull]DashboardContext context)
         {

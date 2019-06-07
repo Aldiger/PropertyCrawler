@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RightMove.Data.Models;
 using RightMove.Data.Repositories;
 using RightMoveWeb.Models;
@@ -21,19 +22,19 @@ namespace RightMoveWeb.Controllers
             _repo = repo;
         }
 
-        
-        public IActionResult Index(int? pageNumber, string sort)
+
+        public IActionResult Index(int? pageNumber, string sort, List<string> postal_code)
         {
-            if(!pageNumber.HasValue || pageNumber < 1)
+            if (!pageNumber.HasValue || pageNumber < 1)
             {
                 pageNumber = 1;
             }
-            if (!string.IsNullOrEmpty(sort))
-                ViewData["CurrentSort"] = sort;
-            else
-                ViewData["CurrentSort"] = "";
+            //if (!string.IsNullOrEmpty(sort))
+            //    ViewData["CurrentSort"] = sort;
+            //else
+            //    ViewData["CurrentSort"] = "";
 
-            var query = _repo.GetAllPostalCodesAsync(sort);
+            var query = _repo.GetAllPostalCodesAsync(sort, postal_code);
             var totalCount = query.Count();
             var items = query
                 .Skip((pageNumber.Value - 1) * pagesize)
@@ -111,15 +112,18 @@ namespace RightMoveWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-          await _repo.DeletePostalCodeAsync(id);
+            await _repo.DeletePostalCodeAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Search()
+        {
+            var lista = await _repo.AllPostalCodesSelect();
 
-
-
-
-
+            ViewBag.Postal = new SelectList(lista, "Text");
+            return View();
+        }
 
     }
 }

@@ -10,7 +10,7 @@
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
     <title>CoreUI Free Bootstrap Admin Template</title>
     <!-- Icons-->
-    <link href="~/node" rel="stylesheet" />
+    @*<link href="~/node" rel="stylesheet" />*@
     <link href="~/node_modules/Coreui/icons/css/coreui-icons.min.css" rel="stylesheet">
     <link href="~/node_modules/flag-icon-css/css/flag-icon.min.css" rel="stylesheet">
     <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -32,6 +32,7 @@
         // Bootstrap ID
         gtag('config', 'UA-118965717-5');
     </script>
+    @RenderSection("css", required: false)
 </head>
 <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
     <header class="app-header navbar">
