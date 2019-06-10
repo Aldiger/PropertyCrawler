@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyCrawler", "RightMove\PropertyCrawler.csproj", "{B71598E1-8FE1-4287-874F-AB268FEE7DA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyCrawler", "PropertyCrawler\PropertyCrawler.csproj", "{B71598E1-8FE1-4287-874F-AB268FEE7DA7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyCrawler.Data", "Data\PropertyCrawler.Data.csproj", "{22FBFA29-421A-4014-BAE6-5C9D95BC96C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyCrawlerWeb", "RightMoveWeb\PropertyCrawlerWeb.csproj", "{FC28AF3D-4F28-4E1D-8B55-8F6F39A9D826}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyCrawlerWeb", "PropertyCrawlerWeb\PropertyCrawlerWeb.csproj", "{FC28AF3D-4F28-4E1D-8B55-8F6F39A9D826}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

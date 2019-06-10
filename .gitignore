@@ -32,3 +32,9 @@
 /RightMoveWeb/bin/Debug/netcoreapp2.2
 /Data/bin/Debug
 /.vs/PropertyCrawler/v15
+/PropertyCrawler/bin/Debug/netcoreapp2.2
+/PropertyCrawler/obj/Debug/netcoreapp2.2
+/PropertyCrawler/obj
+/PropertyCrawlerWeb/bin/Debug/netcoreapp2.2
+/PropertyCrawlerWeb/obj
+/PropertyCrawler/PropertyCrawler.csproj.user
