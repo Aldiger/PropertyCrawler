@@ -61,7 +61,7 @@ namespace PropertyCrawlerWeb
             services.AddCloudscribePagination();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddScoped<IJobs, Jobs>();
+            services.AddScoped<IJobService, JobService>();
 
         }
 

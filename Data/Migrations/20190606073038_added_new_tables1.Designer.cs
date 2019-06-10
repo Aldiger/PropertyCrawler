@@ -21,7 +21,7 @@ namespace PropertyCrawler.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("RightMove.Data.Agent", b =>
+            modelBuilder.Entity("PropertyCrawler.Data.Agent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,7 +48,7 @@ namespace PropertyCrawler.Data.Migrations
                     b.ToTable("Agents");
                 });
 
-            modelBuilder.Entity("RightMove.Data.Image", b =>
+            modelBuilder.Entity("PropertyCrawler.Data.Image", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +73,7 @@ namespace PropertyCrawler.Data.Migrations
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("RightMove.Data.Portal", b =>
+            modelBuilder.Entity("PropertyCrawler.Data.Portal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,7 +94,7 @@ namespace PropertyCrawler.Data.Migrations
                     b.ToTable("Portals");
                 });
 
-            modelBuilder.Entity("RightMove.Data.PostalCode", b =>
+            modelBuilder.Entity("PropertyCrawler.Data.PostalCode", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -115,7 +115,7 @@ namespace PropertyCrawler.Data.Migrations
                     b.ToTable("PostalCodes");
                 });
 
-            modelBuilder.Entity("RightMove.Data.Property", b =>
+            modelBuilder.Entity("PropertyCrawler.Data.Property", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -154,7 +154,7 @@ namespace PropertyCrawler.Data.Migrations
                     b.ToTable("Properties");
                 });
 
-            modelBuilder.Entity("RightMove.Data.Url", b =>
+            modelBuilder.Entity("PropertyCrawler.Data.Url", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -183,30 +183,30 @@ namespace PropertyCrawler.Data.Migrations
                     b.ToTable("Urls");
                 });
 
-            modelBuilder.Entity("RightMove.Data.Image", b =>
+            modelBuilder.Entity("PropertyCrawler.Data.Image", b =>
                 {
-                    b.HasOne("RightMove.Data.Property", "Property")
+                    b.HasOne("PropertyCrawler.Data.Property", "Property")
                         .WithMany("Images")
                         .HasForeignKey("PropertyId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("RightMove.Data.Property", b =>
+            modelBuilder.Entity("PropertyCrawler.Data.Property", b =>
                 {
-                    b.HasOne("RightMove.Data.Agent", "Agent")
+                    b.HasOne("PropertyCrawler.Data.Agent", "Agent")
                         .WithMany("Properties")
                         .HasForeignKey("AgentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("RightMove.Data.Url", b =>
+            modelBuilder.Entity("PropertyCrawler.Data.Url", b =>
                 {
-                    b.HasOne("RightMove.Data.Portal", "Portal")
+                    b.HasOne("PropertyCrawler.Data.Portal", "Portal")
                         .WithMany("Urls")
                         .HasForeignKey("PortalId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("RightMove.Data.PostalCode", "PostalCode")
+                    b.HasOne("PropertyCrawler.Data.PostalCode", "PostalCode")
                         .WithMany("Urls")
                         .HasForeignKey("PostalCodeId")
                         .OnDelete(DeleteBehavior.Cascade);

@@ -21,7 +21,7 @@ namespace PropertyCrawler.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("RightMove.Data.Portal", b =>
+            modelBuilder.Entity("PropertyCrawler.Data.Portal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,7 +42,7 @@ namespace PropertyCrawler.Data.Migrations
                     b.ToTable("Portal");
                 });
 
-            modelBuilder.Entity("RightMove.Data.PostalCode", b =>
+            modelBuilder.Entity("PropertyCrawler.Data.PostalCode", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +63,7 @@ namespace PropertyCrawler.Data.Migrations
                     b.ToTable("PostalCodes");
                 });
 
-            modelBuilder.Entity("RightMove.Data.Url", b =>
+            modelBuilder.Entity("PropertyCrawler.Data.Url", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,14 +92,14 @@ namespace PropertyCrawler.Data.Migrations
                     b.ToTable("Url");
                 });
 
-            modelBuilder.Entity("RightMove.Data.Url", b =>
+            modelBuilder.Entity("PropertyCrawler.Data.Url", b =>
                 {
-                    b.HasOne("RightMove.Data.Portal")
+                    b.HasOne("PropertyCrawler.Data.Portal")
                         .WithMany("Urls")
                         .HasForeignKey("PortalId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("RightMove.Data.PostalCode")
+                    b.HasOne("PropertyCrawler.Data.PostalCode")
                         .WithMany("Urls")
                         .HasForeignKey("PostalCodeId")
                         .OnDelete(DeleteBehavior.Cascade);
