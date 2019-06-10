@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RightMoveWeb.Areas.Identity.Data;
+using PropertyCrawlerWeb.Areas.Identity.Data;
 
-[assembly: HostingStartup(typeof(RightMoveWeb.Areas.Identity.IdentityHostingStartup))]
-namespace RightMoveWeb.Areas.Identity
+[assembly: HostingStartup(typeof(PropertyCrawlerWeb.Areas.Identity.IdentityHostingStartup))]
+namespace PropertyCrawlerWeb.Areas.Identity
 {
     public class IdentityHostingStartup : IHostingStartup
     {

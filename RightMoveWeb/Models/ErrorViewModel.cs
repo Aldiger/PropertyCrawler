@@ -1,6 +1,6 @@
 using System;
 
-namespace RightMoveWeb.Models
+namespace PropertyCrawlerWeb.Models
 {
     public class ErrorViewModel
     {

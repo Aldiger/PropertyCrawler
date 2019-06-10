@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace RightMove.Data.Migrations
+namespace PropertyCrawler.Data.Migrations
 {
     public partial class added_new_tables1 : Migration
     {
@@ -81,32 +81,28 @@ namespace RightMove.Data.Migrations
                 table: "Images",
                 column: "PropertyId",
                 principalTable: "Properties",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Properties_Agents_AgentId",
                 table: "Properties",
                 column: "AgentId",
                 principalTable: "Agents",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Urls_Portals_PortalId",
                 table: "Urls",
                 column: "PortalId",
                 principalTable: "Portals",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Urls_PostalCodes_PostalCodeId",
                 table: "Urls",
                 column: "PostalCodeId",
                 principalTable: "PostalCodes",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -186,32 +182,28 @@ namespace RightMove.Data.Migrations
                 table: "Images",
                 column: "PropertyId",
                 principalTable: "Property",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Property_Agents_AgentId",
                 table: "Property",
                 column: "AgentId",
                 principalTable: "Agents",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Url_Portal_PortalId",
                 table: "Url",
                 column: "PortalId",
                 principalTable: "Portal",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Url_PostalCodes_PostalCodeId",
                 table: "Url",
                 column: "PostalCodeId",
                 principalTable: "PostalCodes",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
         }
     }
 }

@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using RightMove.Data.Models;
-using RightMove.Data.Repositories;
-using RightMoveWeb.Models;
+using PropertyCrawler.Data.Models;
+using PropertyCrawler.Data.Repositories;
+using PropertyCrawlerWeb.Models;
 
-namespace RightMoveWeb.Controllers
+namespace PropertyCrawlerWeb.Controllers
 {
 
     public class PostalCodeController : Controller

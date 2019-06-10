@@ -12,13 +12,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RightMove.Data.Repositories;
+using PropertyCrawler.Data.Repositories;
 using Hangfire;
 using Hangfire.Dashboard;
 using Hangfire.Annotations;
-using RightMoveWeb.Services;
+using PropertyCrawlerWeb.Services;
 
-namespace RightMoveWeb
+namespace PropertyCrawlerWeb
 {
     public class Startup
     {
@@ -39,8 +39,8 @@ namespace RightMoveWeb
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<RightMove.Data.AppContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                    x => x.MigrationsAssembly("RightMove.Data")));
+            services.AddDbContext<PropertyCrawler.Data.AppContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+                    x => x.MigrationsAssembly("PropertyCrawler.Data")));
             //services.AddDbContext<ApplicationDbContext>(options =>
             //    options.UseSqlServer(
             //        Configuration.GetConnectionString("DefaultConnection")));

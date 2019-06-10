@@ -29,3 +29,5 @@
 /RightMoveWeb/bin/Debug/netcoreapp2.2/RightMove.Data.pdb
 /RightMoveWeb/bin/Debug/netcoreapp2.2/RightMove.Data.dll
 /.vs/config/applicationhost.config
+/RightMoveWeb/bin/Debug/netcoreapp2.2
+/Data/bin/Debug

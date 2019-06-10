@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RightMove.Data.Models
+namespace PropertyCrawler.Data.Models
 {
     public class PostalCodeModel
     {

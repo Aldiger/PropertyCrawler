@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RightMove.Data;
+using PropertyCrawler.Data;
 
-namespace RightMove.Data.Migrations
+namespace PropertyCrawler.Data.Migrations
 {
     [DbContext(typeof(AppContext))]
     [Migration("20190604113842_init")]

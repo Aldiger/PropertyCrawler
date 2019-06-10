@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace RightMoveWeb.Migrations
+namespace PropertyCrawlerWeb.Migrations
 {
     public partial class init : Migration
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace RightMoveWeb.Migrations
+namespace PropertyCrawlerWeb.Migrations
 {
     public partial class changes : Migration
     {

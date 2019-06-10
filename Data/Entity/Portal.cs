@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
 
-namespace RightMove.Data
+namespace PropertyCrawler.Data
 {
     public class Portal : Base
     {
+        public Portal()
+        {
+            Urls = new List<Url>();
+        }
         public string Name { get; set; }
         public string Url { get; set; }
 

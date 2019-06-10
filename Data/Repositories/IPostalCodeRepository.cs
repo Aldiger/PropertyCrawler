@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RightMove.Data.Models;
+using PropertyCrawler.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RightMove.Data.Repositories
+namespace PropertyCrawler.Data.Repositories
 {
     public interface IPostalCodeRepository
     {

@@ -17,7 +17,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Data\RightMove.Data.csproj" />
+    <ProjectReference Include="..\Data\PropertyCrawler.Data.csproj" />
   </ItemGroup>
 
 </Project>

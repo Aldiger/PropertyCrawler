@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace RightMove.Data
+namespace PropertyCrawler.Data
 {
     public class AppContext : DbContext
     {
@@ -10,6 +10,8 @@ namespace RightMove.Data
         public DbSet<Url> Urls { get; set; }
         public DbSet<Portal> Portals { get; set; }
         public DbSet<Property> Properties { get; set; }
+        public DbSet<PropertyDescription> PropertyDescriptions { get; set; }
+        public DbSet<PropertyPrice> PropertyPrices { get; set; }
         public DbSet<Agent> Agents { get; set; }
         public DbSet<Image> Images { get; set; }
 

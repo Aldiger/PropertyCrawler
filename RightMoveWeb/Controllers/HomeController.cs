@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using RightMoveWeb.Models;
+using PropertyCrawlerWeb.Models;
 
-namespace RightMoveWeb.Controllers
+namespace PropertyCrawlerWeb.Controllers
 {
     public class HomeController : Controller
     {

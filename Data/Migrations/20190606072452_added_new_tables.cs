@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace RightMove.Data.Migrations
+namespace PropertyCrawler.Data.Migrations
 {
     public partial class added_new_tables : Migration
     {
@@ -55,8 +55,7 @@ namespace RightMove.Data.Migrations
                         name: "FK_Property_Agents_AgentId",
                         column: x => x.AgentId,
                         principalTable: "Agents",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -79,8 +78,7 @@ namespace RightMove.Data.Migrations
                         name: "FK_Images_Property_PropertyId",
                         column: x => x.PropertyId,
                         principalTable: "Property",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace RightMove.Data.Migrations
+namespace PropertyCrawler.Data.Migrations
 {
     public partial class init : Migration
     {

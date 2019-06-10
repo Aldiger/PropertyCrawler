@@ -10,8 +10,8 @@ using PropertyCrawler.Data;
 namespace PropertyCrawler.Data.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20190606072452_added_new_tables")]
-    partial class added_new_tables
+    [Migration("20190608225602_property-details-tables")]
+    partial class propertydetailstables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,17 +29,25 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<string>("Address");
+                    b.Property<int>("AgentCode");
 
-                    b.Property<int>("Code");
+                    b.Property<string>("AgentType");
+
+                    b.Property<string>("BranchName");
+
+                    b.Property<string>("BranchPostcode");
+
+                    b.Property<string>("BrandName");
+
+                    b.Property<string>("CompanyName");
+
+                    b.Property<string>("CompanyType");
 
                     b.Property<DateTime>("DateAdded");
 
                     b.Property<DateTime>("DateModified");
 
-                    b.Property<string>("LogoUrl");
-
-                    b.Property<string>("Name");
+                    b.Property<string>("DisplayAddress");
 
                     b.Property<string>("PhoneNumber");
 
@@ -48,7 +56,7 @@ namespace PropertyCrawler.Data.Migrations
                     b.ToTable("Agents");
                 });
 
-            modelBuilder.Entity("RightMove.Data.Images", b =>
+            modelBuilder.Entity("RightMove.Data.Image", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,7 +64,7 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<int>("Caption");
+                    b.Property<string>("Caption");
 
                     b.Property<DateTime>("DateAdded");
 
@@ -91,7 +99,7 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Portal");
+                    b.ToTable("Portals");
                 });
 
             modelBuilder.Entity("RightMove.Data.PostalCode", b =>
@@ -110,6 +118,8 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.Property<string>("OpCode");
 
+                    b.Property<int>("OutCode");
+
                     b.HasKey("Id");
 
                     b.ToTable("PostalCodes");
@@ -123,11 +133,54 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.Property<bool>("Active");
 
+                    b.Property<string>("Added");
+
                     b.Property<string>("Address");
 
                     b.Property<int>("AgentId");
 
-                    b.Property<string>("City");
+                    b.Property<byte>("BedroomsCount");
+
+                    b.Property<DateTime>("DateAdded");
+
+                    b.Property<DateTime>("DateModified");
+
+                    b.Property<int>("FloorPlanCount");
+
+                    b.Property<double>("Latitude");
+
+                    b.Property<string>("LettingType");
+
+                    b.Property<double>("Longtitude");
+
+                    b.Property<string>("PostalCode");
+
+                    b.Property<int>("PropertyDescriptionId");
+
+                    b.Property<string>("PropertySubType");
+
+                    b.Property<string>("PropertyType");
+
+                    b.Property<int>("UrlId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AgentId");
+
+                    b.HasIndex("PropertyDescriptionId");
+
+                    b.HasIndex("UrlId");
+
+                    b.ToTable("Properties");
+                });
+
+            modelBuilder.Entity("RightMove.Data.PropertyDescription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
 
                     b.Property<DateTime>("DateAdded");
 
@@ -135,23 +188,38 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<float>("Latitude");
-
-                    b.Property<float>("Longtitude");
-
-                    b.Property<byte>("NumberOfBedrooms");
-
-                    b.Property<string>("PostalCode");
-
-                    b.Property<string>("PriceType");
-
-                    b.Property<string>("PropertyType");
+                    b.Property<int>("PropertyId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AgentId");
+                    b.HasIndex("PropertyId");
 
-                    b.ToTable("Property");
+                    b.ToTable("PropertyDescriptions");
+                });
+
+            modelBuilder.Entity("RightMove.Data.PropertyPrice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<DateTime>("DateAdded");
+
+                    b.Property<DateTime>("DateModified");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<string>("PriceQualifier");
+
+                    b.Property<int>("PropertyId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PropertyId");
+
+                    b.ToTable("PropertyPrices");
                 });
 
             modelBuilder.Entity("RightMove.Data.Url", b =>
@@ -170,6 +238,10 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.Property<int>("PostalCodeId");
 
+                    b.Property<int>("PropertyCode");
+
+                    b.Property<int?>("PropertyId");
+
                     b.Property<string>("PropertyUrl");
 
                     b.Property<int>("Type");
@@ -180,36 +252,60 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.HasIndex("PostalCodeId");
 
-                    b.ToTable("Url");
+                    b.HasIndex("PropertyId");
+
+                    b.ToTable("Urls");
                 });
 
-            modelBuilder.Entity("RightMove.Data.Images", b =>
+            modelBuilder.Entity("RightMove.Data.Image", b =>
                 {
                     b.HasOne("RightMove.Data.Property", "Property")
                         .WithMany("Images")
-                        .HasForeignKey("PropertyId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PropertyId");
                 });
 
             modelBuilder.Entity("RightMove.Data.Property", b =>
                 {
                     b.HasOne("RightMove.Data.Agent", "Agent")
                         .WithMany("Properties")
-                        .HasForeignKey("AgentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AgentId");
+
+                    b.HasOne("RightMove.Data.PropertyDescription", "PropertyDescription")
+                        .WithMany()
+                        .HasForeignKey("PropertyDescriptionId");
+
+                    b.HasOne("RightMove.Data.Url", "Url")
+                        .WithMany()
+                        .HasForeignKey("UrlId");
+                });
+
+            modelBuilder.Entity("RightMove.Data.PropertyDescription", b =>
+                {
+                    b.HasOne("RightMove.Data.Property", "Property")
+                        .WithMany()
+                        .HasForeignKey("PropertyId");
+                });
+
+            modelBuilder.Entity("RightMove.Data.PropertyPrice", b =>
+                {
+                    b.HasOne("RightMove.Data.Property", "Property")
+                        .WithMany("PropertyPrices")
+                        .HasForeignKey("PropertyId");
                 });
 
             modelBuilder.Entity("RightMove.Data.Url", b =>
                 {
                     b.HasOne("RightMove.Data.Portal", "Portal")
                         .WithMany("Urls")
-                        .HasForeignKey("PortalId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PortalId");
 
                     b.HasOne("RightMove.Data.PostalCode", "PostalCode")
                         .WithMany("Urls")
-                        .HasForeignKey("PostalCodeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PostalCodeId");
+
+                    b.HasOne("RightMove.Data.Property", "Property")
+                        .WithMany()
+                        .HasForeignKey("PropertyId");
                 });
 #pragma warning restore 612, 618
         }

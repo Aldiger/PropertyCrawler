@@ -1,4 +1,4 @@
-﻿namespace RightMove.Data
+﻿namespace PropertyCrawler.Data
 {
     public enum Type
     {

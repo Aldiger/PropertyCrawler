@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace RightMoveWeb.Areas.Identity.Pages.Account.Manage
+namespace PropertyCrawlerWeb.Areas.Identity.Pages.Account.Manage
 {
     public static class ManageNavPages
     {

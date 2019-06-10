@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RightMove.Data
+namespace PropertyCrawler.Data
 {
     public abstract class Base
     {
