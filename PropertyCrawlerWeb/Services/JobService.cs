@@ -25,7 +25,7 @@ namespace PropertyCrawlerWeb.Services
             var result =new Process();
 
             var jobId = BackgroundJob.Enqueue(
-                () =>_crawlerService.UrlCrawler(null));
+                () =>_crawlerService.UrlCrawler(null,PropertyCrawler.Data.Type.Rent, false));
 
 
             //update process status
@@ -41,7 +41,7 @@ namespace PropertyCrawlerWeb.Services
             var result = new Process();
 
             var jobId = BackgroundJob.Enqueue(
-                () => _crawlerService.UrlCrawler(null));
+                () => _crawlerService.UrlCrawler(null, PropertyCrawler.Data.Type.Rent, false));
 
 
             //update process status
@@ -57,7 +57,7 @@ namespace PropertyCrawlerWeb.Services
             var result = new Process();
 
             var jobId = BackgroundJob.Enqueue(
-                () => _crawlerService.UrlCrawler(null));
+                () => _crawlerService.UrlCrawler(null, PropertyCrawler.Data.Type.Rent, false));
 
 
             //update process status
