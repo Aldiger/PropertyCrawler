@@ -12,15 +12,6 @@ namespace PropertyCrawler.Data.Entity
         public virtual List<ProcessPostalCode> ProcessPostalCodes { get; set; }
     }
 
-    public class ProcessPostalCode: Base
-    {
-        public ProcessStatus Status { get; set; }
-        public int ProcessId { get; set; }
-        public int PostalCodeId { get; set; }
-    }
-
-
-
     public enum ProcessType
     {
         Full,
