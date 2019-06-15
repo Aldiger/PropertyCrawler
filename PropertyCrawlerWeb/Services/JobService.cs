@@ -11,9 +11,6 @@ namespace PropertyCrawlerWeb.Services
     public interface IJobService
     {
         void Job(List<PostalCode> postalCodes, PropertyCrawler.Data.PropertyType type, ProcessType processType);
-        //void PriceProcess();
-        //void PropertyProcess();
-
 
     }
     public class JobService : IJobService
@@ -24,37 +21,37 @@ namespace PropertyCrawlerWeb.Services
         {
             //add process and list of processpostalcodes-- status processing
             //
-            var dateNow = DateTime.UtcNow;
-            var result = new Process
-            {
-                DateAdded = dateNow,
-                DateModified = dateNow,
-                Active = true,
-                Status=(int)ProcessStatus.Processing,
-                Type=processType
-            };
-            //insert process w
+            //var dateNow = DateTime.UtcNow;
+            //var result = new Process
+            //{
+            //    DateAdded = dateNow,
+            //    DateModified = dateNow,
+            //    Active = true,
+            //    Status=(int)ProcessStatus.Processing,
+            //    Type=processType
+            //};
+            ////insert process w
 
-            var jobId = BackgroundJob.Enqueue(() => _crawlerService.UrlCrawler(postalCodes, propertyType, processType));
+            //var jobId = BackgroundJob.Enqueue(() => _crawlerService.UrlCrawler(postalCodes, propertyType, processType));
 
 
-             //update process status
-              BackgroundJob.ContinueJobWith(jobId,()=> Execute(jobId, result.Id) , JobContinuationOptions.OnAnyFinishedState);
+            // //update process status
+            //  BackgroundJob.ContinueJobWith(jobId,()=> Execute(jobId, result.Id) , JobContinuationOptions.OnAnyFinishedState);
 
         }
         private void Execute(string jobId,int processId)
         {
-            using (Hangfire.Storage.IStorageConnection connection = JobStorage.Current.GetConnection())
-            {
-                Hangfire.Storage.JobData job = connection.GetJobData(jobId);
-                if (job.State == "Succeeded")
-                {
-                    //var succeeded = connection.GetAllItemsFromSet($"batch:{batchId}:succeeded");
-                    //if (succeeded.Any())
-                    //{
-                    //};
-                }
-            }
+            //using (Hangfire.Storage.IStorageConnection connection = JobStorage.Current.GetConnection())
+            //{
+            //    Hangfire.Storage.JobData job = connection.GetJobData(jobId);
+            //    if (job.State == "Succeeded")
+            //    {
+            //        //var succeeded = connection.GetAllItemsFromSet($"batch:{batchId}:succeeded");
+            //        //if (succeeded.Any())
+            //        //{
+            //        //};
+            //    }
+            //}
         }
     }
 }
