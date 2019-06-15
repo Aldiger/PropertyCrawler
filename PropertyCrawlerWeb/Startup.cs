@@ -57,14 +57,14 @@ namespace PropertyCrawlerWeb
             services.AddHangfireServer();
 
             services.AddTransient<IPostalCodeRepository, PostalCodeRepository>();
-            services.AddTransient<IJobService, IJobService>();
-            services.AddTransient<ICrawlerService, CrawlerService>();
+            services.AddScoped<IJobService, JobService>();
+            services.AddScoped<ICrawlerService, CrawlerService>();
 
 
             services.AddCloudscribePagination();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddScoped<IJobService, JobService>();
+
 
         }
 

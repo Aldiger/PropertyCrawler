@@ -19,24 +19,23 @@ namespace PropertyCrawlerWeb.Services
 
         public void Job(List<PostalCode> postalCodes, PropertyCrawler.Data.PropertyType propertyType, ProcessType processType)
         {
-            //add process and list of processpostalcodes-- status processing
-            //
-            //var dateNow = DateTime.UtcNow;
-            //var result = new Process
-            //{
-            //    DateAdded = dateNow,
-            //    DateModified = dateNow,
-            //    Active = true,
-            //    Status=(int)ProcessStatus.Processing,
-            //    Type=processType
-            //};
-            ////insert process w
 
-            //var jobId = BackgroundJob.Enqueue(() => _crawlerService.UrlCrawler(postalCodes, propertyType, processType));
+           //var dateNow = DateTime.UtcNow;
+           // var result = new Process
+           // {
+           //     DateAdded = dateNow,
+           //     DateModified = dateNow,
+           //     Active = true,
+           //     Status = (int)ProcessStatus.Processing,
+           //     Type = processType
+           // };
+           // //insert process w
+
+           // var jobId = BackgroundJob.Enqueue(() => _crawlerService.UrlCrawler(postalCodes, propertyType, processType));
 
 
-            // //update process status
-            //  BackgroundJob.ContinueJobWith(jobId,()=> Execute(jobId, result.Id) , JobContinuationOptions.OnAnyFinishedState);
+           // //update process status
+           // BackgroundJob.ContinueJobWith(jobId, () => Execute(jobId, result.Id), JobContinuationOptions.OnAnyFinishedState);
 
         }
         private void Execute(string jobId,int processId)
