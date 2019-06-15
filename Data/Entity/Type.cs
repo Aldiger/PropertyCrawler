@@ -3,6 +3,7 @@
     public enum PropertyType
     {
         Sell = 1,
-        Rent
+        Rent, 
+        All
     }
 }

@@ -38,3 +38,5 @@
 /PropertyCrawlerWeb/bin/Debug/netcoreapp2.2
 /PropertyCrawlerWeb/obj
 /PropertyCrawler/PropertyCrawler.csproj.user
+/PropertyCrawler.Test/obj
+/PropertyCrawlerWeb/PropertyCrawlerWeb.csproj.user

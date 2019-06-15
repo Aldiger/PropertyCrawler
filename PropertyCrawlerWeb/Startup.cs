@@ -57,6 +57,7 @@ namespace PropertyCrawlerWeb
             services.AddHangfireServer();
 
             services.AddTransient<IPostalCodeRepository, PostalCodeRepository>();
+            services.AddTransient<IProcessRepository, ProcessRepository>();
             services.AddScoped<IJobService, JobService>();
             services.AddScoped<ICrawlerService, CrawlerService>();
 

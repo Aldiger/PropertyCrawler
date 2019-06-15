@@ -131,5 +131,11 @@ namespace PropertyCrawler.Data
         /// <param name="entities">Collection to remove</param>
         /// <param name="actorId">Unique identifyer of this user</param>
         void RemoveRange(IEnumerable<TEntity> entities);
+
+        /// <summary>
+        /// Save Changes
+        /// </summary>
+        /// <returns></returns>
+        int Complete();
     }
 }

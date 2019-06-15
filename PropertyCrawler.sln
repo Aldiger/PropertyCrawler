@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyCrawler.Data", "Dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyCrawlerWeb", "PropertyCrawlerWeb\PropertyCrawlerWeb.csproj", "{FC28AF3D-4F28-4E1D-8B55-8F6F39A9D826}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyCrawler.Test", "PropertyCrawler.Test\PropertyCrawler.Test.csproj", "{7DA93A51-AA3A-4A95-9654-58CDE597FA1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{FC28AF3D-4F28-4E1D-8B55-8F6F39A9D826}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC28AF3D-4F28-4E1D-8B55-8F6F39A9D826}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC28AF3D-4F28-4E1D-8B55-8F6F39A9D826}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DA93A51-AA3A-4A95-9654-58CDE597FA1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DA93A51-AA3A-4A95-9654-58CDE597FA1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DA93A51-AA3A-4A95-9654-58CDE597FA1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DA93A51-AA3A-4A95-9654-58CDE597FA1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

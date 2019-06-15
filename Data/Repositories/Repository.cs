@@ -19,9 +19,9 @@ namespace PropertyCrawler.Data
 
         public void Add(TEntity entity)
         {
-            if (entity.GetType().GetProperty("Modified") != null)
+            if (entity.GetType().GetProperty("DateModified") != null)
             {
-                entity.GetType().GetProperty("Modified").SetValue(entity, DateTime.UtcNow);
+                entity.GetType().GetProperty("DateModified").SetValue(entity, DateTime.UtcNow);
             }
             if(entity.GetType().GetProperty("Active") != null)
             {
@@ -34,9 +34,9 @@ namespace PropertyCrawler.Data
         {
             foreach (var entity in entities)
             {
-                if (entity.GetType().GetProperty("Modified") != null)
+                if (entity.GetType().GetProperty("DateModified") != null)
                 {
-                    entity.GetType().GetProperty("Modified").SetValue(entity, DateTime.UtcNow);
+                    entity.GetType().GetProperty("DateModified").SetValue(entity, DateTime.UtcNow);
                 }
                 if (entity.GetType().GetProperty("Active") != null)
                 {
@@ -55,9 +55,9 @@ namespace PropertyCrawler.Data
 
             if (existing != null)
             {
-                if (entity.GetType().GetProperty("Modified") != null)
+                if (entity.GetType().GetProperty("DateModified") != null)
                 {
-                    entity.GetType().GetProperty("Modified").SetValue(entity, DateTime.UtcNow);
+                    entity.GetType().GetProperty("DateModified").SetValue(entity, DateTime.UtcNow);
                 }
                 if (entity.GetType().GetProperty("Active") != null)
                 {
@@ -173,9 +173,9 @@ namespace PropertyCrawler.Data
             var dbItem = Context.Set<TEntity>().Find(id);
             if(dbItem != null)
             {
-                if (dbItem.GetType().GetProperty("Modified") != null)
+                if (dbItem.GetType().GetProperty("DateModified") != null)
                 {
-                    dbItem.GetType().GetProperty("Modified").SetValue(dbItem, DateTime.UtcNow);
+                    dbItem.GetType().GetProperty("DateModified").SetValue(dbItem, DateTime.UtcNow);
                 }
                 if (dbItem.GetType().GetProperty("Active") != null)
                 {
@@ -208,5 +208,10 @@ namespace PropertyCrawler.Data
         {
             return Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
         }
-	}
+        public int Complete()
+        {
+            return Context.SaveChanges();
+        }
+
+    }
 }

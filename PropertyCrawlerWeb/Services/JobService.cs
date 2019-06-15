@@ -11,33 +11,33 @@ namespace PropertyCrawlerWeb.Services
 {
     public interface IJobService
     {
-        void Job(List<PostalCode> postalCodes, PropertyCrawler.Data.PropertyType type, ProcessType processType);
+        void Job(List<PostalCode> postalCodes, PropertyType type, ProcessType processType);
 
     }
     public class JobService : IJobService
-    { 
+    {
         private readonly ICrawlerService _crawlerService;
         private readonly IProcessRepository _processRepository;
 
-        public void Job(List<PostalCode> postalCodes, PropertyCrawler.Data.PropertyType propertyType, ProcessType processType)
+        public void Job(List<PostalCode> postalCodes, PropertyType propertyType, ProcessType processType)
         {
 
            var dateNow = DateTime.UtcNow;
-            var result = new Process
+            var process = new Process
             {
                 DateAdded = dateNow,
-                DateModified = dateNow,
                 Active = true,
                 Status = (int)ProcessStatus.Processing,
                 Type = processType
             };
-            //insert process w
+            _processRepository.Add(process);
+            _processRepository.Complete();
 
             var jobId = BackgroundJob.Enqueue(() => _crawlerService.UrlCrawler(postalCodes, propertyType, processType));
 
 
             //update process status
-            BackgroundJob.ContinueJobWith(jobId, () => Execute(jobId, result.Id), JobContinuationOptions.OnAnyFinishedState);
+            BackgroundJob.ContinueJobWith(jobId, () => Execute(jobId, process.Id), JobContinuationOptions.OnAnyFinishedState);
 
         }
         private void Execute(string jobId,int processId)
@@ -45,10 +45,10 @@ namespace PropertyCrawlerWeb.Services
             using (Hangfire.Storage.IStorageConnection connection = JobStorage.Current.GetConnection())
             {
                 Hangfire.Storage.JobData job = connection.GetJobData(jobId);
-                var process= _processRepository
+                var process = _processRepository.Get(processId);
                 if (job.State == "Succeeded")
                 {
-                    
+                    process.Status = ProcessStatus.Success;
                     //var succeeded = connection.GetAllItemsFromSet($"batch:{batchId}:succeeded");
                     //if (succeeded.Any())
                     //{
@@ -56,9 +56,12 @@ namespace PropertyCrawlerWeb.Services
                 }
                 else
                 {
-
+                    process.Status = ProcessStatus.Failed;
                 }
+                _processRepository.Update(process, process.Id);
+                _processRepository.Complete();
             }
+
         }
     }
 }
