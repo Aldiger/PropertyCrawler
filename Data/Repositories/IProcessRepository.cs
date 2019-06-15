@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PropertyCrawler.Data.Entity;
 using PropertyCrawler.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -8,14 +9,19 @@ using System.Threading.Tasks;
 
 namespace PropertyCrawler.Data.Repositories
 {
-    public interface IProcessRepository
+    public interface IProcessRepository : IRepository<Process>
     {
 
     }
 
 
-    public class ProcessRepository : IProcessRepository
+    public class ProcessRepository : Repository<Process>, IProcessRepository
     {
+        AppContext _context;
+        public ProcessRepository(AppContext context) : base(context)
+        {
+            _context = context;
+        }
         //AppContext _context;
 
         //public PostalCodeRepository(AppContext context)
