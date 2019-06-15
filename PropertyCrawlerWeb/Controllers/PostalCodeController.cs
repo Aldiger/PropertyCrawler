@@ -68,7 +68,6 @@ namespace PropertyCrawlerWeb.Controllers
             }
 
             await _repo.CreatePostalCodeAsync(model);
-
             return RedirectToAction(nameof(Index));
         }
 

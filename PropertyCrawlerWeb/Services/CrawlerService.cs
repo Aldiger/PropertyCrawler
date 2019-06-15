@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using Newtonsoft.Json;
 using PropertyCrawler.Data;
+using PropertyCrawler.Data.Entity;
 using PropertyCrawler.Data.Models;
 using System;
 using System.Collections.Concurrent;
@@ -13,45 +14,45 @@ namespace PropertyCrawlerWeb.Services
 {
     public interface ICrawlerService
     {
-        void UrlCrawler(List<PostalCode> postalCodes, PropertyCrawler.Data.Type type, bool full);
-        void PropertiesCrawler(List<PostalCode> postalCodes, bool full);
-        void PriceCrawler(List<PostalCode> postalCodes, bool full);
+        void UrlCrawler(List<PostalCode> postalCodes, PropertyCrawler.Data.PropertyType type, ProcessType processType);
+        //void PropertiesCrawler(List<PostalCode> postalCodes, ProcessType processType);
+        //void PriceCrawler(List<PostalCode> postalCodes, bool full);
     }
     public class CrawlerService : ICrawlerService
     {
-        public void UrlCrawler(List<PostalCode> postalCodes, PropertyCrawler.Data.Type type,  bool full)
+        public void UrlCrawler(List<PostalCode> postalCodes, PropertyCrawler.Data.PropertyType type, ProcessType processType)
         {
 
         }
 
-        public void PropertiesCrawler(List<PostalCode> postalCodes, bool full)
-        {
-            var _appContext = new PropertyCrawler.Data.AppContext(true);
+        //public void PropertiesCrawler(List<PostalCode> postalCodes, bool full)
+        //{
+        //    var _appContext = new PropertyCrawler.Data.AppContext(true);
 
 
-            var basedUrl = "https://www.rightmove.co.uk";
+        //    var basedUrl = "https://www.rightmove.co.uk";
 
-            var take = _appContext.Urls.Where(x => x.Active).ToList();
-
-
-            var partitioner = Partitioner.Create(take);
-            var parallelOptions = new ParallelOptions
-            {
-                MaxDegreeOfParallelism = Environment.ProcessorCount
-            };
-
-            Parallel.ForEach(partitioner, parallelOptions, (listItem, loopState) =>
-            {
-                ProcessProperty(basedUrl, listItem.PropertyUrl, listItem.Id);
-            });
+        //    var take = _appContext.Urls.Where(x => x.Active).ToList();
 
 
-        }
+        //    var partitioner = Partitioner.Create(take);
+        //    var parallelOptions = new ParallelOptions
+        //    {
+        //        MaxDegreeOfParallelism = Environment.ProcessorCount
+        //    };
 
-        public void PriceCrawler(List<PostalCode> postalCodes, bool full)
-        {
+        //    Parallel.ForEach(partitioner, parallelOptions, (listItem, loopState) =>
+        //    {
+        //        ProcessProperty(basedUrl, listItem.PropertyUrl, listItem.Id);
+        //    });
 
-        }
+
+        //}
+
+        //public void PriceCrawler(List<PostalCode> postalCodes, bool full)
+        //{
+
+        //}
 
         private void ProcessProperty(string basedUrl, string url, int urlId)
         {
@@ -151,6 +152,7 @@ namespace PropertyCrawlerWeb.Services
                         LettingType = propertyData.propertyInfo.lettingType,
                         PropertyType = propertyData.propertyInfo.propertyType,
                         PostalCode = propertyData.location.postcode,
+                        Price= propertyData.propertyInfo.price,
                         Latitude = propertyData.location.latitude,
                         Longtitude = propertyData.location.longitude,
                         Added = propertyData.propertyInfo.added,
@@ -261,7 +263,7 @@ namespace PropertyCrawlerWeb.Services
                             linksList.Add(item.Attributes["href"].Value);
                         }
                         linksList = linksList.Distinct().ToList();
-                        var urls = linksList.Select(x => new Url { PropertyUrl = x, Type =(int)PropertyCrawler.Data.Type.Rent, PortalId = 1, DateModified = DateTime.Now, DateAdded = DateTime.Now, Active = true, PostalCodeId = cod.Id });
+                        var urls = linksList.Select(x => new Url { PropertyUrl = x, Type =(int)PropertyCrawler.Data.PropertyType.Rent, PortalId = 1, DateModified = DateTime.Now, DateAdded = DateTime.Now, Active = true, PostalCodeId = cod.Id });
                         context.Urls.AddRange(urls);
                         context.SaveChanges();
                     }

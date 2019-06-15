@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PropertyCrawler.Data.Repositories
 {
-    public interface IPostalCodeRepository
+    public interface IPostalCodeRepository: IRepository<PostalCode>
     {
         IQueryable<PostalCodeModel> GetAllPostalCodesAsync(string sort, List<string> postal_code);
 
@@ -24,15 +24,13 @@ namespace PropertyCrawler.Data.Repositories
     }
 
 
-    public class PostalCodeRepository : IPostalCodeRepository
+    public class PostalCodeRepository : Repository<PostalCode>, IPostalCodeRepository
     {
         AppContext _context;
-
-        public PostalCodeRepository(AppContext context)
+        public PostalCodeRepository(AppContext context) : base(context)
         {
             _context = context;
         }
-
 
         public async Task<PostalCodeModel> GetById(int? id)
         {

@@ -18,7 +18,7 @@ namespace PropertyCrawler.Data
         public byte BedroomsCount { get; set; }
         public int FloorPlanCount { get; set; }
         public string LettingType { get; set; }
-        public Type Type { get; set; }
+        public PropertyType Type { get; set; }
         public string Address { get; set; }
         public string PostalCode { get; set; }
 

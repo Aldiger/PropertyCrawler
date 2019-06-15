@@ -1,4 +1,5 @@
 ﻿using Hangfire;
+using PropertyCrawler.Data;
 using PropertyCrawler.Data.Entity;
 using System;
 using System.Collections.Generic;
@@ -9,62 +10,51 @@ namespace PropertyCrawlerWeb.Services
 {
     public interface IJobService
     {
-        void UrlProcess();
-        void PriceProcess();
-        void PropertyProcess();
+        void Job(List<PostalCode> postalCodes, PropertyCrawler.Data.PropertyType type, ProcessType processType);
+        //void PriceProcess();
+        //void PropertyProcess();
 
 
     }
-    public class JobService: IJobService
-    {
+    public class JobService : IJobService
+    { 
         private readonly ICrawlerService _crawlerService;
 
-        public void UrlProcess()
+        public void Job(List<PostalCode> postalCodes, PropertyCrawler.Data.PropertyType propertyType, ProcessType processType)
         {
             //add process and list of processpostalcodes-- status processing
-            var result =new Process();
+            //
+            var dateNow = DateTime.UtcNow;
+            var result = new Process
+            {
+                DateAdded = dateNow,
+                DateModified = dateNow,
+                Active = true,
+                Status=(int)ProcessStatus.Processing,
+                Type=processType
+            };
+            //insert process w
 
-            var jobId = BackgroundJob.Enqueue(
-                () =>_crawlerService.UrlCrawler(null,PropertyCrawler.Data.Type.Rent, false));
+            var jobId = BackgroundJob.Enqueue(() => _crawlerService.UrlCrawler(postalCodes, propertyType, processType));
 
 
-            //update process status
-            BackgroundJob.ContinueJobWith(jobId, 
-                () =>
-                        Console.WriteLine("Update Process status!")
-            );
+             //update process status
+              BackgroundJob.ContinueJobWith(jobId,()=> Execute(jobId, result.Id) , JobContinuationOptions.OnAnyFinishedState);
+
         }
-
-        public void PropertyProcess()
+        private void Execute(string jobId,int processId)
         {
-            //add process and list of processpostalcodes-- status processing
-            var result = new Process();
-
-            var jobId = BackgroundJob.Enqueue(
-                () => _crawlerService.UrlCrawler(null, PropertyCrawler.Data.Type.Rent, false));
-
-
-            //update process status
-            BackgroundJob.ContinueJobWith(jobId,
-                () =>
-                        Console.WriteLine("Update Process status!")
-            );
-        }
-
-        public void PriceProcess()
-        {
-            //add process and list of processpostalcodes-- status processing
-            var result = new Process();
-
-            var jobId = BackgroundJob.Enqueue(
-                () => _crawlerService.UrlCrawler(null, PropertyCrawler.Data.Type.Rent, false));
-
-
-            //update process status
-            BackgroundJob.ContinueJobWith(jobId,
-                () =>
-                        Console.WriteLine("Update Process status!")
-            );
+            using (Hangfire.Storage.IStorageConnection connection = JobStorage.Current.GetConnection())
+            {
+                Hangfire.Storage.JobData job = connection.GetJobData(jobId);
+                if (job.State == "Succeeded")
+                {
+                    //var succeeded = connection.GetAllItemsFromSet($"batch:{batchId}:succeeded");
+                    //if (succeeded.Any())
+                    //{
+                    //};
+                }
+            }
         }
     }
 }
