@@ -439,7 +439,7 @@ namespace PropertyCrawler
                             linksList.Add(item.Attributes["href"].Value);
                         }
                         linksList = linksList.Distinct().ToList();
-                        var urls = linksList.Select(x => new Url { PropertyUrl = x, Type = (int)Data.Type.Rent, PortalId = 1, DateModified = DateTime.Now, DateAdded = DateTime.Now, Active = true, PostalCodeId = cod.Id });
+                        var urls = linksList.Select(x => new Url { PropertyUrl = x, Type = (int)Data.PropertyType.Rent, PortalId = 1, DateModified = DateTime.Now, DateAdded = DateTime.Now, Active = true, PostalCodeId = cod.Id });
                         context.Urls.AddRange(urls);
                         context.SaveChanges();
                     }

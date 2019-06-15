@@ -1,6 +1,6 @@
 ﻿namespace PropertyCrawler.Data
 {
-    public enum Type
+    public enum PropertyType
     {
         Sell = 1,
         Rent
