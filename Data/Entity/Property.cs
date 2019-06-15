@@ -12,15 +12,22 @@ namespace PropertyCrawler.Data
             PropertyPrices = new List<PropertyPrice>();
         }
         public string Added { get; set; }
+        public DateTime PropertyAdded { get; set; }
         public string PropertyType { get; set; }
         public string PropertySubType { get; set; }
         public byte BedroomsCount { get; set; }
         public int FloorPlanCount { get; set; }
         public string LettingType { get; set; }
-
+        public Type Type { get; set; }
         public string Address { get; set; }
-
         public string PostalCode { get; set; }
+
+        public string PostalCodePrefix { get; set; }
+        public string PostalCodeExtended { get; set; }
+        public string PostalCodeFull { get; set; }
+
+        public decimal Price { get; set; }
+
         public double Latitude { get; set; }
         public double Longtitude { get; set; }
 

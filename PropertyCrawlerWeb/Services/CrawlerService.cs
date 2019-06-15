@@ -128,6 +128,7 @@ namespace PropertyCrawlerWeb.Services
                         DateAdded = dateNow,
                         DateModified = dateNow,
                         Price = propertyData.propertyInfo.price,
+                        PriceQualifier=propertyData.propertyInfo.priceQualifier,
                         Active = true
                     };
 
@@ -153,6 +154,7 @@ namespace PropertyCrawlerWeb.Services
                         Latitude = propertyData.location.latitude,
                         Longtitude = propertyData.location.longitude,
                         Added = propertyData.propertyInfo.added,
+                        PropertyAdded=DateTime.TryParse(propertyData.propertyInfo.added, out DateTime tempDate) ?tempDate : DateTime.MinValue,
                         Address = address,
                         BedroomsCount = (byte)propertyData.propertyInfo.beds,
                         FloorPlanCount = propertyData.floorplanCount,
