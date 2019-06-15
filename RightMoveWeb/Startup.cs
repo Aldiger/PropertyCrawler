@@ -57,6 +57,7 @@ namespace RightMoveWeb
             services.AddHangfireServer();
 
             services.AddTransient<IPostalCodeRepository, PostalCodeRepository>();
+            services.AddTransient<IProcessRepository, ProcessRepository>();
             
             services.AddCloudscribePagination();
 

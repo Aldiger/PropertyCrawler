@@ -29,10 +29,10 @@ namespace RightMoveWeb.Controllers
             {
                 pageNumber = 1;
             }
-            //if (!string.IsNullOrEmpty(sort))
-            //    ViewData["CurrentSort"] = sort;
-            //else
-            //    ViewData["CurrentSort"] = "";
+            if (!string.IsNullOrEmpty(sort))
+                ViewData["CurrentSort"] = sort;
+            else
+                ViewData["CurrentSort"] = "";
 
             var query = _repo.GetAllPostalCodesAsync(sort, postal_code);
             var totalCount = query.Count();
