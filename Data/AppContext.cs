@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PropertyCrawler.Data.Entity;
 
 namespace PropertyCrawler.Data
 {
@@ -14,6 +15,9 @@ namespace PropertyCrawler.Data
         public DbSet<PropertyPrice> PropertyPrices { get; set; }
         public DbSet<Agent> Agents { get; set; }
         public DbSet<Image> Images { get; set; }
+
+        public DbSet<Process> Process { get; set; }
+        public DbSet<ProcessPostalCode> ProcessPostalCode { get; set; }
 
         public AppContext(DbContextOptions<AppContext> options) : base(options)
         {

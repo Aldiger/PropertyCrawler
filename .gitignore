@@ -49,3 +49,4 @@
 /PropertyCrawlerWeb/appsettings
 
 /.vs/PropertyCrawler/DesignTimeBuild/.dtbcache
+/PropertyCrawlerWeb/PropertyCrawlerWeb.csproj.user
