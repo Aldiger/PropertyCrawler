@@ -44,3 +44,7 @@
 /.vs/PropertyCrawler/v16/Server/sqlite3/db.lock
 /.vs/PropertyCrawler/v16/Server/sqlite3/storage.ide-wal
 /.vs/PropertyCrawler/v16/Server/sqlite3/storage.ide-shm
+/PropertyCrawlerWeb/appsettings.json
+
+/PropertyCrawlerWeb/appsettings
+
