@@ -36,6 +36,7 @@ namespace PropertyCrawler.Test
         public void TestMethod2()
         {
             var appcontext = new PropertyCrawler.Data.AppContext(true);
+            var ddd = _postalCodeRepository.GetAll().ToList();
             var dateNow = DateTime.UtcNow;
             ///property-for-sale/property-81702935.html
             appcontext.UrlTypes.AddRange(new List<UrlType>

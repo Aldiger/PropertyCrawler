@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PropertyCrawler.Data.Models;
 using PropertyCrawler.Data.Repositories;
+using PropertyCrawlerWeb.Helpers;
 using PropertyCrawlerWeb.Models;
 
 namespace PropertyCrawlerWeb.Controllers
@@ -121,6 +122,9 @@ namespace PropertyCrawlerWeb.Controllers
             var lista = await _repo.AllPostalCodesSelect();
 
             ViewBag.Postal = new SelectList(lista, "Text");
+           
+
+
             return View();
         }
 

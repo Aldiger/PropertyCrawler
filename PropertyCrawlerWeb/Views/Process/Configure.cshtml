@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section css{
+    <link href="~/lib/jquery-chosen/chosen.css" rel="stylesheet" />
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <strong>Configure </strong>Processes
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="get" asp-controller="Process" asp-action="Configure">
+                    <div class="col-md-12" style="float:right;">
+                        <div class="row">
+                            <div class="col">
+                                <label class="col-form-label" for="postalCodes">Postal Codes</label>
+                                <select class="form-control" name="postalCodes" id="postalCodes" multiple asp-items="@ViewBag.Postal">
+                                    <option value="">Select All</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label class="col-form-label" for="type">Property Type</label>
+                                <select class="form-control" name="type" id="type" asp-items="@ViewBag.PropertyType"></select>
+                            </div>
+                            <div class="col">
+                                <label class="col-form-label" for="processType">Process Type</label>
+                                <select class="form-control" name="processType" id="processType" asp-items="@ViewBag.ProcessType"></select>
+                            </div>
+                        </div>
+                        <div class="row form-group" style="padding-top:25px;">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="schedule" />
+                                    <label class="custom-control-label" id="labelSchedule" for="schedule">Schedule</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <select class="form-control" name="scheduleInterval" id="scheduleInterval" asp-items="@ViewBag.ScheduleIntervalType"></select>
+                            </div>
+                            <div class="col justify-content-center">
+                                <button class="btn btn-primary px-4" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/lib/jquery-chosen/chosen.jquery.min.js"></script>
+    <script>
+        $("#postalCodes").chosen();
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#scheduleInterval').hide();
+
+            $('#schedule').change(function () {
+                if ($('input.custom-control-input').is(':checked')) {
+                    $('#scheduleInterval').show();
+                }
+                else {
+                    $('#scheduleInterval').hide();
+                }
+            });
+        });
+
+    </script>
+}

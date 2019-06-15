@@ -15,7 +15,7 @@ namespace PropertyCrawler.Data.Entity
     public enum ProcessType
     {
         Full,
-        UpdatePrice
+        Update_Price
     }
     public enum ProcessStatus
     {
