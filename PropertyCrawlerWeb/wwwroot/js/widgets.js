@@ -154,7 +154,7 @@ var cardChart3 = new Chart($('#card-chart3'), {
 var cardChart4 = new Chart($('#card-chart4'), {
   type: 'bar',
   data: {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'January', 'February', 'March', 'April'],
+    labels: [],
     datasets: [{
       label: 'My First dataset',
       backgroundColor: 'rgba(255,255,255,.2)',

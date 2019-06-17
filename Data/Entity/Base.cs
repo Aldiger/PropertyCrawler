@@ -9,5 +9,6 @@ namespace PropertyCrawler.Data
         public DateTime DateAdded { get; set; }
         public DateTime DateModified { get; set; }
         public bool Active { get; set; }
+    
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PropertyCrawler.Data;
 
 namespace PropertyCrawler.Data.Migrations
 {
     [DbContext(typeof(AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20190617091101_ProcessChanges")]
+    partial class ProcessChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,8 +68,6 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.Property<DateTime>("DateModified");
 
-                    b.Property<int>("PropertyType");
-
                     b.Property<int>("Status");
 
                     b.Property<int>("Type");
@@ -96,8 +96,6 @@ namespace PropertyCrawler.Data.Migrations
                     b.Property<int>("Status");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PostalCodeId");
 
                     b.HasIndex("ProcessId");
 
@@ -338,11 +336,6 @@ namespace PropertyCrawler.Data.Migrations
 
             modelBuilder.Entity("PropertyCrawler.Data.Entity.ProcessPostalCode", b =>
                 {
-                    b.HasOne("PropertyCrawler.Data.PostalCode", "PostalCode")
-                        .WithMany()
-                        .HasForeignKey("PostalCodeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("PropertyCrawler.Data.Entity.Process")
                         .WithMany("ProcessPostalCodes")
                         .HasForeignKey("ProcessId")

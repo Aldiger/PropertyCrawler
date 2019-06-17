@@ -11,18 +11,19 @@ namespace PropertyCrawlerWeb.Services
 {
     public interface IJobService
     {
-        void Job(List<PostalCode> postalCodes, PropertyType type, ProcessType processType);
+        Task Job(List<PostalCode> postalCodes, PropertyType type, ProcessType processType, bool isScheduled, ScheduleInterval? scheduleInterval);
 
     }
     public class JobService : IJobService
     {
         private readonly ICrawlerService _crawlerService;
         private readonly IProcessRepository _processRepository;
+       
 
-        public void Job(List<PostalCode> postalCodes, PropertyType propertyType, ProcessType processType)
+        public async Task Job(List<PostalCode> postalCodes, PropertyType propertyType, ProcessType processType, bool isScheduled, ScheduleInterval? scheduleInterval)
         {
-
-           var dateNow = DateTime.UtcNow;
+           
+            var dateNow = DateTime.UtcNow;
             var process = new Process
             {
                 DateAdded = dateNow,
@@ -30,17 +31,17 @@ namespace PropertyCrawlerWeb.Services
                 Status = (int)ProcessStatus.Processing,
                 Type = processType
             };
-            _processRepository.Add(process);
-            _processRepository.Complete();
+             _processRepository.Add(process);
+             _processRepository.Complete();
 
-            var jobId = BackgroundJob.Enqueue(() => _crawlerService.UrlCrawler(postalCodes, propertyType, processType));
+            var jobId =  BackgroundJob.Enqueue(() => _crawlerService.UrlCrawler(postalCodes, propertyType, processType));
 
 
             //update process status
             BackgroundJob.ContinueJobWith(jobId, () => Execute(jobId, process.Id), JobContinuationOptions.OnAnyFinishedState);
 
         }
-        private void Execute(string jobId,int processId)
+        private void Execute(string jobId, int processId)
         {
             using (Hangfire.Storage.IStorageConnection connection = JobStorage.Current.GetConnection())
             {

@@ -16,18 +16,17 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
-                <form method="get" asp-controller="Process" asp-action="Configure">
+                <form method="post" asp-controller="Process" asp-action="Execute">
                     <div class="col-md-12" style="float:right;">
                         <div class="row">
                             <div class="col">
                                 <label class="col-form-label" for="postalCodes">Postal Codes</label>
-                                <select class="form-control" name="postalCodes" id="postalCodes" multiple asp-items="@ViewBag.Postal">
-                                    <option value="">Select All</option>
+                                <select data-placeholder="ALL if none is selected" class="form-control" name="postalCodes" id="postalCodes" multiple asp-items="@ViewBag.Postal">
                                 </select>
                             </div>
                             <div class="col">
-                                <label class="col-form-label" for="type">Property Type</label>
-                                <select class="form-control" name="type" id="type" asp-items="@ViewBag.PropertyType"></select>
+                                <label class="col-form-label" for="propertyType">Property Type</label>
+                                <select class="form-control" name="propertyType" id="propertyType" asp-items="@ViewBag.PropertyType"></select>
                             </div>
                             <div class="col">
                                 <label class="col-form-label" for="processType">Process Type</label>
@@ -37,12 +36,14 @@
                         <div class="row form-group" style="padding-top:25px;">
                             <div class="col">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="schedule" />
+                                    <input type="checkbox" class="custom-control-input" name="isScheduled" value="true" id="schedule" />
                                     <label class="custom-control-label" id="labelSchedule" for="schedule">Schedule</label>
                                 </div>
                             </div>
                             <div class="col">
-                                <select class="form-control" name="scheduleInterval" id="scheduleInterval" asp-items="@ViewBag.ScheduleIntervalType"></select>
+                                <select class="form-control" name="scheduleInterval" id="scheduleInterval" asp-items="@ViewBag.ScheduleIntervalType">
+                                    <option value="" hidden selected disabled>Select one</option>
+                                </select>
                             </div>
                             <div class="col justify-content-center">
                                 <button class="btn btn-primary px-4" type="submit">Search</button>

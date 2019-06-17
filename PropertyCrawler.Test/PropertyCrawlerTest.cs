@@ -28,7 +28,8 @@ namespace PropertyCrawler.Test
         public void TestMethod1()
         {
             var postalCode=_postalCodeRepository.GetAll().Take(2).ToList();
-            _jobService.Job(postalCode, PropertyType.All, Data.Entity.ProcessType.Full);
+            _jobService.Job(postalCode, PropertyType.All, Data.Entity.ProcessType.Full, isScheduled:false, scheduleInterval:ScheduleInterval.Daily
+                );
         }
 
 

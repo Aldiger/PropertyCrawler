@@ -1,8 +1,61 @@
-﻿@{
+﻿@model ProcessModels
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+
+            <div class="col-sm-6 col-lg-4">
+                <a asp-controller="Process" asp-action="List">
+                    <div class="card text-white bg-cyan">
+                        <div class="card-body pb-0">
+                            <div class="btn-group float-right">
+                            </div>
+                            <div class="text-value">@Model.ProcessCount</div>
+                            <div>Total Processes</div>
+                        </div>
+                        <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
+                            <canvas class="chart" id="card-chart3" height="70"></canvas>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-sm-6 col-lg-4">
+                <a asp-controller="Process" asp-action="List" asp-route-param="success">
+                    <div class="card text-white bg-success">
+                        <div class="card-body pb-0">
+                            <div class="text-value">@Model.ProcessSuccessfullCount</div>
+                            <div>Total Processes Succeded</div>
+                        </div>
+                        <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
+                            <canvas class="chart" id="card-chart2" height="70"></canvas>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+            <div class="col-sm-6 col-lg-4">
+                <a asp-controller="Process" asp-action="List" asp-route-param="failed">
+                    <div class="card text-white bg-danger">
+                        <div class="card-body pb-0">
+                            <div class="text-value">@Model.ProcessFailedCount</div>
+                            <div>Total Processes Failed</div>
+                        </div>
+                        <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
+                            <canvas class="chart" id="card-chart4" height="70"></canvas>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+
+
+        </div>
+    </div>
 </div>

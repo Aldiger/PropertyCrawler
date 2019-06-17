@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PropertyCrawler.Data.Repositories;
 using PropertyCrawlerWeb.Models;
 
 namespace PropertyCrawlerWeb.Controllers
@@ -12,10 +13,12 @@ namespace PropertyCrawlerWeb.Controllers
     public class HomeController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IProcessRepository _repo;
 
-        public HomeController(UserManager<IdentityUser> userManager)
+        public HomeController(UserManager<IdentityUser> userManager, IProcessRepository repo)
         {
             _userManager = userManager;
+            _repo = repo;
         }
         public async Task<IActionResult> Index()
         {
@@ -25,7 +28,8 @@ namespace PropertyCrawlerWeb.Controllers
 
                 return LocalRedirect("/Identity/Account/Login");
             }
-            return View();
+            var model = _repo.GeneralProcessInfo();
+            return View(model);
         }
 
         public IActionResult Privacy()

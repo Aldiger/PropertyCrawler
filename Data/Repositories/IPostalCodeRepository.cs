@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace PropertyCrawler.Data.Repositories
 {
-    public interface IPostalCodeRepository: IRepository<PostalCode>
+    public interface IPostalCodeRepository : IRepository<PostalCode>
     {
         IQueryable<PostalCodeModel> GetAllPostalCodesAsync(string sort, List<string> postal_code);
+
+        Task<List<PostalCode>> GetPostalCodesAsync(List<string> postal_code);
 
         Task CreatePostalCodeAsync(PostalCodeModel model);
 
@@ -46,12 +48,22 @@ namespace PropertyCrawler.Data.Repositories
             }).FirstOrDefaultAsync();
         }
 
-        public  async Task<List<string>> AllPostalCodesSelect()
+        public async Task<List<string>> AllPostalCodesSelect()
         {
-            return await  _context.PostalCodes.Select(x => x.Code).ToListAsync();
+            return await _context.PostalCodes.Select(x => x.Code).ToListAsync();
 
         }
 
+        public async Task<List<PostalCode>> GetPostalCodesAsync(List<string> postal_code)
+        {
+            if(postal_code.Count<1)
+            {
+                return await _context.PostalCodes.Where(x => x.Active == true).ToListAsync();
+            }
+            else
+            return await _context.PostalCodes.Where(x => x.Active == true && postal_code.Contains(x.Code)).ToListAsync();
+
+        }
 
         public IQueryable<PostalCodeModel> GetAllPostalCodesAsync(string sort, List<string> postal_code)
         {
@@ -121,9 +133,9 @@ namespace PropertyCrawler.Data.Repositories
                     return list;
             }
 
-           
 
-            
+
+
 
         }
 
