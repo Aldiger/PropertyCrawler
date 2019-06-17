@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using PropertyCrawler.Data;
 using PropertyCrawler.Models;
@@ -32,12 +33,28 @@ namespace PropertyCrawler
             //var take = 400;
 
             //var url = context.Urls.OrderBy(x => x.Id).Take(66).ToList();
+            //var list=(from url in context.Urls.Where(x => x.Active)
+            //         join prop in context.Properties.Where(x=>x.Active) on url.Id equals prop.UrlId into gj
+            //from subpet in gj.DefaultIfEmpty()
+            //select new { url }).ToList();
 
-           
+            //var list1 = (from prop in context.Properties.Where(x => x.Active)
+            //            join url in context.Urls.Where(x => x.Active) on prop.Url equals url.Id into gj
+            //            from subpet in gj.DefaultIfEmpty()
+            //            select new { prop }).ToList();
+            var urls = context.Urls.Where(x => x.Active).OrderBy(x => x.Id).ToList();
+            var existing = (List<int>)context.Properties.Where(x => x.Active).Select(x => (int)x.UrlId).Distinct().ToList();
+            var r = urls.Select(x => x.Id).Except(existing).ToList();
+            urls = (from u in urls
+                   join a in r on u.Id equals a
+                   select u).ToList();
 
-            var take = context.Urls.Where(x=>x.Active).ToList();
 
-        
+            var take = urls;
+
+            // var take= context.Urls.Where(x => x.Active && x.Id==600000);
+
+
             var partitioner = Partitioner.Create(take);
             var parallelOptions = new ParallelOptions
             {
@@ -46,7 +63,7 @@ namespace PropertyCrawler
 
             Parallel.ForEach(partitioner, parallelOptions, (listItem, loopState) =>
             {
-                ProcessDetails(listItem.PropertyUrl, listItem.Id);
+                ProcessDetails(listItem);
                 //Do something
             });
             //Parallel.Invoke(
@@ -226,7 +243,7 @@ namespace PropertyCrawler
             }
         }
 
-        static void ProcessDetails(string url, int urlId)
+        static void ProcessDetails(Url url)
         {
             var _appContext = new Data.AppContext(true);
             //sale example
@@ -243,115 +260,137 @@ namespace PropertyCrawler
                     client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36");
                     client.DefaultRequestHeaders.Add("Accept-Language", "en-US,en;q=0.9,it;q=0.8,sq;q=0.7");
 
-                    var links = client.GetStringAsync(basedUrl+url).Result;
+                    var links = client.GetStringAsync(basedUrl+url.PropertyUrl).Result;
                     HtmlDocument document = new HtmlDocument();
                     document.LoadHtml(links);
-                    var propertyInfo = @"'property',";
-                    var branchInfo = @"'branch',";
-                    var imagesInfo = @"images : ";
-                    var data = document.DocumentNode.SelectNodes("//script").FirstOrDefault(x=>x.InnerHtml.Contains(propertyInfo));
-                    var jsonString = data.InnerText.Split(@"'property',")[1].Trim();
-                    var jsonData = jsonString.Remove(jsonString.Length - 3, 3);
-                    var propertyData = JsonConvert.DeserializeObject<Details>(jsonData);
-
-                    var branchData= document.DocumentNode.SelectNodes("//script").FirstOrDefault(x => x.InnerText.Contains(branchInfo));
-                    jsonString = branchData.InnerText.Split(@"'branch',")[1].Trim();
-                    jsonData = jsonString.Remove(jsonString.Length - 3, 3);
-                    var agentData = JsonConvert.DeserializeObject<Branch>(jsonData);
-
-                    var imagesData = document.DocumentNode.SelectNodes("//script").FirstOrDefault(x => x.InnerText.Contains(imagesInfo));
-                    jsonString = imagesData.InnerText.Split(imagesInfo)[1].Trim();
-                    jsonData = jsonString.Split("\"}],")[0]+ "\"}]";
-                    var imageData = JsonConvert.DeserializeObject<List<Images>>(jsonData);
-
-                    //Description itemprop="description"   itemprop="description"
-                    var description = document.DocumentNode.SelectSingleNode(".//p[@itemprop=\"description\"]").InnerText.Trim();
-                    //Full address  //address   itemprop=address
-                    var address = document.DocumentNode.SelectSingleNode(".//address[@itemprop=\"address\"]").InnerText.Trim();
-                    //agent phone number// class branch-telephone-number
-                    var agentPhoneNumber = document.DocumentNode.SelectSingleNode(".//a[@class=\"branch-telephone-number\"]").InnerText.Trim();
-
-                    var dateNow = DateTime.UtcNow;
-                    //agent
-                    var existAgent = _appContext.Agents.FirstOrDefault(x => x.AgentCode == agentData.branchId && x.Active);
-                    if (existAgent ==null)
+                    if (document.DocumentNode.InnerText.Contains("This property has been removed by the agent.")
+                        || document.DocumentNode.InnerText.Contains("We are sorry but we could not find the property you have requested.") )
                     {
-                        existAgent = new Agent
-                        {
-                            DateAdded = dateNow,
-                            DateModified = dateNow,
-                            DisplayAddress = agentData.displayAddress,
-                            Active = true,
-                            AgentCode = agentData.branchId,
-                            AgentType = agentData.agentType,
-                            BranchName = agentData.branchName,
-                            BranchPostcode = agentData.branchPostcode,
-                            BrandName = agentData.brandName,
-                            CompanyName = agentData.companyName,
-                            CompanyType = agentData.companyType,
-                            PhoneNumber = agentPhoneNumber,
-                        };
-                    }
-
-                    //description
-                    var propertyDescription=new PropertyDescription
-                    {
-                        DateAdded = dateNow,
-                        DateModified = dateNow,
-                        Description=description,
-                        Active = true
-                    };
-                    //price
-                    var price = new PropertyPrice
-                    {
-                        DateAdded = dateNow,
-                        DateModified = dateNow,
-                        Price = propertyData.propertyInfo.price,
-                        Active = true
-                    };
-
-                    //Images
-                    var images = imageData.Select(x => new Image
-                    {
-                        DateAdded = dateNow,
-                        DateModified = dateNow,
-                        Active = true,
-                        Caption = x.caption,
-                        Url = x.masterUrl
-                    }).ToList();
-
-                    //property
-                    var property = new Property
-                    {
-                        DateAdded = dateNow,
-                        DateModified = dateNow,
-                        Active = true,
-                        LettingType=propertyData.propertyInfo.lettingType,
-                        PropertyType = propertyData.propertyInfo.propertyType,
-                        PostalCode = propertyData.location.postcode,
-                        Latitude = propertyData.location.latitude,
-                        Longtitude = propertyData.location.longitude,
-                        Added = propertyData.propertyInfo.added,
-                        Address = address,
-                        BedroomsCount =(byte) propertyData.propertyInfo.beds,
-                        FloorPlanCount = propertyData.floorplanCount,
-                        PropertySubType = propertyData.propertyInfo.propertySubType,
-                        UrlId=urlId
-                    };
-                    property.Images.AddRange(images);
-                    property.PropertyPrices.Add(price);
-                    if (existAgent.Id !=0)
-                    {
-                        property.AgentId = existAgent.Id;
+                        url.DateModified = DateTime.UtcNow;
+                        url.Active = false;
+                        _appContext.Entry(url).State = EntityState.Modified;
+                        _appContext.Urls.Update(url);
+                        _appContext.SaveChanges();
                     }
                     else
                     {
-                        property.Agent = existAgent;
-                    }
-                    property.PropertyDescription = propertyDescription;
+                        var propertyInfo = @"'property',";
+                        var branchInfo = @"'branch',";
+                        var imagesInfo = @"images : ";
+                        var data = document.DocumentNode.SelectNodes("//script").FirstOrDefault(x=>x.InnerHtml.Contains(propertyInfo));
+                        var jsonString = data.InnerText.Split(@"'property',")[1].Trim();
+                        var jsonData = jsonString.Remove(jsonString.Length - 3, 3);
+                        var propertyData = JsonConvert.DeserializeObject<Details>(jsonData);
 
-                    _appContext.Properties.Add(property);
-                    _appContext.SaveChanges();
+                        var branchData= document.DocumentNode.SelectNodes("//script").FirstOrDefault(x => x.InnerText.Contains(branchInfo));
+                        jsonString = branchData.InnerText.Split(@"'branch',")[1].Trim();
+                        jsonData = jsonString.Remove(jsonString.Length - 3, 3);
+                        var agentData = JsonConvert.DeserializeObject<Branch>(jsonData);
+
+                        var imagesData = document.DocumentNode.SelectNodes("//script").FirstOrDefault(x => x.InnerText.Contains(imagesInfo));
+                        jsonString = imagesData.InnerText.Split(imagesInfo)[1].Trim();
+                        jsonData = jsonString.Split("\"}],")[0]+ "\"}]";
+                        var imageData = jsonString.Split("\"}],").Length>1? JsonConvert.DeserializeObject<List<Images>>(jsonData): new List<Images>();
+
+                        //Description itemprop="description"   itemprop="description"
+                        var description = document.DocumentNode.SelectSingleNode(".//p[@itemprop=\"description\"]").InnerText.Trim();
+                        //Full address  //address   itemprop=address
+                        var address = document.DocumentNode.SelectSingleNode(".//address[@itemprop=\"address\"]").InnerText.Trim();
+                        //agent phone number// class branch-telephone-number
+                        var agentPhoneNumber = document.DocumentNode.SelectSingleNode(".//a[@class=\"branch-telephone-number\"]").InnerText.Trim();
+
+                        var dateNow = DateTime.UtcNow;
+                        var priceValue = !string.IsNullOrEmpty(propertyData.propertyInfo.price) ? (Decimal.TryParse(propertyData.propertyInfo.price, out decimal tem) ? tem : 0) : 0;
+                        //agent
+                        var existAgent = _appContext.Agents.FirstOrDefault(x => x.AgentCode == agentData.branchId && x.Active);
+                        if (existAgent ==null)
+                        {
+                            existAgent = new Agent
+                            {
+                                DateAdded = dateNow,
+                                DateModified = dateNow,
+                                DisplayAddress = agentData.displayAddress,
+                                Active = true,
+                                AgentCode = agentData.branchId,
+                                AgentType = agentData.agentType,
+                                BranchName = agentData.branchName,
+                                BranchPostcode = agentData.branchPostcode,
+                                BrandName = agentData.brandName,
+                                CompanyName = agentData.companyName,
+                                CompanyType = agentData.companyType,
+                                PhoneNumber = agentPhoneNumber,
+                            };
+                        }
+
+                        //description
+                        var propertyDescription=new PropertyDescription
+                        {
+                            DateAdded = dateNow,
+                            DateModified = dateNow,
+                            Description=description,
+                            Active = true
+                        };
+                        //price
+                        var price = new PropertyPrice
+                        {
+                            DateAdded = dateNow,
+                            DateModified = dateNow,
+                            Price = priceValue,
+                            PriceQualifier=propertyData.propertyInfo.priceQualifier,
+                            Active = true
+                        };
+
+                        //Images
+                        var images = imageData.Select(x => new Image
+                        {
+                            DateAdded = dateNow,
+                            DateModified = dateNow,
+                            Active = true,
+                            Caption = x.caption,
+                            Url = x.masterUrl
+                        }).ToList();
+
+                        var postC = propertyData.location.postcode?.Trim();
+                        //property
+                        var property = new Property
+                        {
+                            DateAdded = dateNow,
+                            DateModified = dateNow,
+                            Active = true,
+                            LettingType=propertyData.propertyInfo.lettingType,
+                            PropertyType = propertyData.propertyInfo.propertyType,
+                            PostalCode = propertyData.location.postcode,
+                            PostalCodeFull= postC.Substring(0,postC.Length-2),
+                            PostalCodePrefix = postC.Substring(0,2),
+                            PostalCodeExtended = postC.Substring(0, postC.Length - 3).Trim(),
+                            Type=(PropertyType)url.Type,
+                            PropertyAdded=DateTime.TryParse(propertyData.propertyInfo.added,out DateTime temp)?temp:DateTime.MinValue,
+                            Latitude = propertyData.location.latitude,
+                            Longtitude = propertyData.location.longitude,
+                            Added = propertyData.propertyInfo.added,
+                            Address = address,
+                            Price = priceValue,
+                            BedroomsCount =(byte) propertyData.propertyInfo.beds,
+                            FloorPlanCount = propertyData.floorplanCount,
+                            PropertySubType = propertyData.propertyInfo.propertySubType,
+                            UrlId=url.Id
+                        };
+                        property.Images.AddRange(images);
+                        property.PropertyPrices.Add(price);
+                        if (existAgent.Id !=0)
+                        {
+                            property.AgentId = existAgent.Id;
+                        }
+                        else
+                        {
+                            property.Agent = existAgent;
+                        }
+                        property.PropertyDescription = propertyDescription;
+
+                        _appContext.Properties.Add(property);
+                        _appContext.SaveChanges();
+
+                    }
 
                 }
 
