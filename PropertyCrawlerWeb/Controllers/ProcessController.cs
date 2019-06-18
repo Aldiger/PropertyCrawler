@@ -21,13 +21,11 @@ namespace PropertyCrawlerWeb.Controllers
         private readonly IPostalCodeRepository _repoPostalCode;
         private readonly IProcessRepository _repo;
         private readonly IJobService _jobService;
-        private readonly PropertyCrawler.Data.AppContext _context;
-        public ProcessController(IPostalCodeRepository repoPostalCode, IProcessRepository repo, IJobService jobService, PropertyCrawler.Data.AppContext context)
+        public ProcessController(IPostalCodeRepository repoPostalCode, IProcessRepository repo, IJobService jobService)
         {
             _repoPostalCode = repoPostalCode;
             _repo = repo;
             _jobService = jobService;
-            _context = context;
         }
 
         [HttpGet]
@@ -41,6 +39,8 @@ namespace PropertyCrawlerWeb.Controllers
 
             return View();
         }
+
+
 
         public async Task<IActionResult> List(string param, int? pageNumber)
         {
@@ -78,28 +78,68 @@ namespace PropertyCrawlerWeb.Controllers
             }
 
             var lista = await _repoPostalCode.GetPostalCodesAsync(postalCodes);
-            var process = new Process
-            {
-                DateAdded = DateTime.UtcNow,
-                Active = true,
-                Status = ProcessStatus.Failed,
-                Type = processType,
-                PropertyType = propertyType,
-                DateModified = DateTime.UtcNow,
-                ProcessPostalCodes = lista.Select(x => new ProcessPostalCode
-                {
-                    PostalCodeId = x.Id,
-                    DateAdded = DateTime.UtcNow,
-                    Active = true,
-                }).ToList()
-            };
-            await _context.Processes.AddAsync(process);
-            await _context.SaveChangesAsync();
+            //var process = new Process
+            //{
+            //    DateAdded = DateTime.UtcNow,
+            //    Active = true,
+            //    Status = ProcessStatus.Failed,
+            //    Type = processType,
+            //    PropertyType = propertyType,
+            //    DateModified = DateTime.UtcNow,
+            //    ProcessPostalCodes = lista.Select(x => new ProcessPostalCode
+            //    {
+            //        PostalCodeId = x.Id,
+            //        DateAdded = DateTime.UtcNow,
+            //        Active = true,
+            //    }).ToList()
+            //};
+            //await _context.Processes.AddAsync(process);
+            //await _context.SaveChangesAsync();
 
-            //await _jobService.Job(lista, propertyType, processType, isScheduled, scheduleInterval);
+
 
             //do thirret service
+            await _jobService.Job(lista, propertyType, processType, isScheduled, scheduleInterval);
+
+
             return RedirectToAction(nameof(List));
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ReExecute(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return NotFound();
+            }
+
+            var model = await _repo.GetProcessById((int)id);
+
+            var postalCodes = model.ProcessPostalCodes.Select(x => x.PostalCode).ToList();
+            PropertyType propertyType = model.PropertyType;
+            ProcessType processType = model.Type;
+            bool isScheduled = false;
+
+            await _jobService.Job(postalCodes, propertyType, processType, isScheduled, scheduleInterval: null);
+
+            return RedirectToAction(nameof(List));
+
+        }
+
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if(!id.HasValue)
+            {
+                return NotFound();
+            }
+
+            var model = await _repo.GetProcessVmById((int)id);
+
+            return View(model);
+
+        }
+
     }
 }

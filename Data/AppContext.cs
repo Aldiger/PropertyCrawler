@@ -19,6 +19,8 @@ namespace PropertyCrawler.Data
         public DbSet<ProcessPostalCode> ProcessPostalCodes { get; set; }
         public DbSet<UrlType> UrlTypes { get; set; }
 
+        public DbSet<ProcessPostalCodeUrlFailed> ProcessPostalCodeUrlFaileds { get; set; }
+
         //public DbSet<Process> Process { get; set; }
         //public DbSet<ProcessPostalCode> ProcessPostalCode { get; set; }
 

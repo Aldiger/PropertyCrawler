@@ -14,6 +14,10 @@ namespace PropertyCrawler.Data.Repositories
         ProcessModels GeneralProcessInfo();
 
         Task<List<ProcessVM>> GetProcessesByStatus(string param);
+
+        Task<Process> GetProcessById(int id);
+
+        Task<ProcessVM> GetProcessVmById(int id);
     }
 
 
@@ -23,6 +27,25 @@ namespace PropertyCrawler.Data.Repositories
         public ProcessRepository(AppContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<ProcessVM> GetProcessVmById(int id)
+        {
+            return await _context.Processes.Include(x => x.ProcessPostalCodes).Where(a => a.Id == id).Select(z => new ProcessVM
+            {
+                PostalCode = z.ProcessPostalCodes.Select(a => a.PostalCode.Code).ToList(),
+                DateAdded = z.DateAdded,
+                DateModified = z.DateModified,
+                PropertyType = z.PropertyType,
+                Status = z.Status,
+                Type = z.Type
+
+            }).FirstOrDefaultAsync();
+        }
+
+        public async Task<Process> GetProcessById(int id)
+        {
+            return await _context.Processes.Include(x => x.ProcessPostalCodes).Where(a => a.Id == id).FirstOrDefaultAsync();
         }
 
 
@@ -36,6 +59,7 @@ namespace PropertyCrawler.Data.Repositories
             };
 
         }
+
 
 
         public async Task<List<ProcessVM>> GetProcessesByStatus(string param)

@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*!
  * CoreUI - Open Source Dashboard UI Kit
  * @version v2.1.7
@@ -5026,6 +5026,8 @@ a.badge-success:focus, a.badge-success.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(77, 189, 116, 0.5);
 }
+
+
 
 .badge-info {
   color: #23282c;
