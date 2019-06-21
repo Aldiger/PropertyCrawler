@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using PropertyCrawler.Data.Entity;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PropertyCrawler.Data
 {
@@ -16,5 +18,8 @@ namespace PropertyCrawler.Data
 
         public int? UrlTypeId { get; set; }
         public virtual UrlType UrlType { get; set; }
+
+        public virtual List<ProcessPostalCodeUrlFailed> ProcessPostalCodeUrlFaileds { get; set; }
+
     }
 }

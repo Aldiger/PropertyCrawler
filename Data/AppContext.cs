@@ -41,7 +41,7 @@ namespace PropertyCrawler.Data
         {
             if (console)
             {
-                optionsBuilder.UseSqlServer(@"Server=.\SQLExpress;Database=PropertiesDb;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(@"Server=localhost;Database=PropertiesDb;Trusted_Connection=True;");
             }
         }
     }

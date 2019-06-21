@@ -211,7 +211,7 @@ namespace PropertyCrawlerWeb.Services
             var code = "AB10";
             var basedUrl = "https://www.rightmove.co.uk/property-to-rent/";
             var getOpCode = $"search.html?searchLocation={code}&locationIdentifier=&useLocationIdentifier=false&buy=For+sale";
-            var opCode = "";
+            var opCode = "OUTCODE % 5E";
             var context = new PropertyCrawler.Data.AppContext(true);
 
             using (var client = new HttpClient(/*handler: httpClientHandler*/))
