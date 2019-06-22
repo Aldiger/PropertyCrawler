@@ -21,11 +21,13 @@ namespace PropertyCrawlerWeb.Controllers
         private readonly IPostalCodeRepository _repoPostalCode;
         private readonly IProcessRepository _repo;
         private readonly IJobService _jobService;
-        public ProcessController(IPostalCodeRepository repoPostalCode, IProcessRepository repo, IJobService jobService)
+        private readonly PropertyCrawler.Data.AppContext _context;
+        public ProcessController(IPostalCodeRepository repoPostalCode, IProcessRepository repo, IJobService jobService, PropertyCrawler.Data.AppContext contexte)
         {
             _repoPostalCode = repoPostalCode;
             _repo = repo;
             _jobService = jobService;
+            _context = contexte;
         }
 
         [HttpGet]
@@ -70,7 +72,7 @@ namespace PropertyCrawlerWeb.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Execute(List<string> postalCodes, PropertyType propertyType, ProcessType processType, bool isScheduled, ScheduleInterval? scheduleInterval)
+        public async Task<IActionResult> Execute(List<string> postalCodes, PropertyType propertyType, ProcessType processType, bool isScheduled, ScheduleInterval? scheduleInterval, string ip, string portal)
         {
             if (isScheduled == true && scheduleInterval == null)
             {
@@ -78,23 +80,23 @@ namespace PropertyCrawlerWeb.Controllers
             }
 
             var lista = await _repoPostalCode.GetPostalCodesAsync(postalCodes);
-            //var process = new Process
-            //{
-            //    DateAdded = DateTime.UtcNow,
-            //    Active = true,
-            //    Status = ProcessStatus.Failed,
-            //    Type = processType,
-            //    PropertyType = propertyType,
-            //    DateModified = DateTime.UtcNow,
-            //    ProcessPostalCodes = lista.Select(x => new ProcessPostalCode
-            //    {
-            //        PostalCodeId = x.Id,
-            //        DateAdded = DateTime.UtcNow,
-            //        Active = true,
-            //    }).ToList()
-            //};
-            //await _context.Processes.AddAsync(process);
-            //await _context.SaveChangesAsync();
+            var process = new Process
+            {
+                DateAdded = DateTime.UtcNow,
+                Active = true,
+                Status = ProcessStatus.Failed,
+                Type = processType,
+                PropertyType = propertyType,
+                DateModified = DateTime.UtcNow,
+                ProcessPostalCodes = lista.Select(x => new ProcessPostalCode
+                {
+                    PostalCodeId = x.Id,
+                    DateAdded = DateTime.UtcNow,
+                    Active = true,
+                }).ToList()
+            };
+            await _context.Processes.AddAsync(process);
+            await _context.SaveChangesAsync();
 
 
 

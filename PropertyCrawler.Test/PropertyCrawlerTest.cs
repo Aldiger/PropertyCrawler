@@ -285,7 +285,7 @@ namespace PropertyCrawler.Test
 
         private void LoadDependencies()
         {
-            var con = @"Server=.\Sqlexpress;Database=PropertiesDb;Trusted_Connection=True;";
+            var con = @"Server=localhost;Database=PropertiesDb;Trusted_Connection=True;";
             var services = new ServiceCollection();
             services.AddDbContext<Data.AppContext>(opts => opts.UseSqlServer(con));
             services.AddHangfire(x => x.UseSqlServerStorage(con));

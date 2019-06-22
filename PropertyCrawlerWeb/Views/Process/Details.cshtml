@@ -62,7 +62,7 @@
 
                 <div class="form-group row">
                     <div class="col text-center">
-                        <h3 class="control-label"><span class="control-label badge badge-pill badge-light">Process Status</span></h3>
+                        <h2 class="control-label"><span class="btn btn-ghost-primary">Process Status</span></h2>
                     </div>
                     <div class="col text-center">
                         <h3 class="control-label"><span class="custom-badge-@Model.Status">@Html.DisplayFor(x => x.Status)</span></h3>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col text-center">
-                        <h4 asp-for="PropertyType"><span class="control-label badge badge-pill badge-light">Property Type</span></h4>
+                        <h4 asp-for="PropertyType"><span class=" btn btn-ghost-primary">Property Type</span></h4>
                     </div>
                     <div class="col text-center">
                         <label asp-for="PropertyType" class="control-label">@Html.DisplayFor(x => x.PropertyType)</label>
@@ -78,7 +78,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col text-center">
-                        <h4 asp-for="DateAdded" class="control-label"><span class="control-label badge badge-pill badge-light">Date Created</span></h4>
+                        <h4 asp-for="DateAdded" class="control-label"><span class=" btn btn-ghost-primary">Date Created</span></h4>
                     </div>
                     <div class="col text-center">
                         <label asp-for="DateAdded" class="control-label">@Html.DisplayFor(x => x.DateAdded)</label>
@@ -86,7 +86,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col text-center">
-                        <h3 class="control-label"><span class="control-label badge badge-pill badge-light">Process Type</span></h3>
+                        <h3 class="control-label"><span class=" btn btn-ghost-primary">Process Type</span></h3>
                     </div>
                     <div class="col text-center">
                         <label asp-for="Type" class="control-label">@Html.DisplayFor(x => x.Type)</label>
@@ -94,22 +94,18 @@
                 </div>
                 <div class="form-group row">
                     <div class="col text-center">
-                        <h3 class="control-label"><span class="control-label badge badge-pill badge-light">Postal Codes</span></h3>
+                        <h3 class="control-label"><span class=" btn btn-ghost-primary">Postal Codes</span></h3>
                     </div>
                     <div class="col text-center">
                         <div class="btn-group dropright">
                             <div>
-                                <button type="button" class="btn btn-secondary">
-                                    Postal Codes
-                                </button>
-                                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="sr-only">Toggle Dropright</span>
-                                </button>
+                                <button class="btn btn-outline-primary  dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Postal Codes</button>
                                 <div class="dropdown-menu">
                                     @foreach (var item in Model.PostalCode)
                                     {
                                         <a class="dropdown-item">@item</a>
                                     }
+                                    
                                 </div>
                             </div>
                         </div>
@@ -121,12 +117,12 @@
                 <div class="row">
                     <div class="col">
                         @*<button class="btn btn-sm btn-primary" type="submit" value="Create" style="padding:6px 40px;">
-                            <i class="fa fa-dot-circle-o"></i> Configure new Process
-                        </button>*@
-                        <a asp-action="Configure" class="btn btn-sm btn-primary" style="padding:6px 40px;">Configure new Process</a>
+                                <i class="fa fa-dot-circle-o"></i> Configure new Process
+                            </button>*@
+                        <a asp-action="Configure" class="btn btn-sm btn-outline-primary" style="padding:6px 40px;">Configure new Process</a>
                     </div>
                     <div class="col text-right">
-                        <a asp-action="List" class="btn btn-sm btn-danger" style="padding:6px 40px;">
+                        <a asp-action="List" class="btn btn-sm btn-outline-primary" style="padding:6px 40px;">
                             Back to List
                         </a>
                     </div>

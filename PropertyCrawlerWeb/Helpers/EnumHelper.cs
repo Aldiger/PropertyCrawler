@@ -26,7 +26,7 @@ namespace PropertyCrawlerWeb.Helpers
                 propTypes.Add(new SelectVM
                 {
                     Id = propertyType[i],
-                    Text = propName[i]
+                    Text = propName[i].Replace("_", " ")
                 });
             }
             return propTypes;
