@@ -52,3 +52,4 @@
 /PropertyCrawlerWeb/PropertyCrawlerWeb.csproj.user
 /PropertyCrawler.Test/obj
 /PropertyCrawler.Test/bin/Debug/netcoreapp2.2
+/PropertyCrawlerWeb/Services/AuthorizeService.cs

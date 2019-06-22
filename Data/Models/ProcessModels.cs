@@ -26,5 +26,6 @@ namespace PropertyCrawler.Data.Models
         public PropertyType PropertyType { get; set; }
 
         public List<string> PostalCode { get; set; }
+        public List<string> FailUrl { get; set; }
     }
 }

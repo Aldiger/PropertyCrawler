@@ -34,6 +34,7 @@ namespace PropertyCrawler.Data.Repositories
             return await _context.Processes.Include(x => x.ProcessPostalCodes).Where(a => a.Id == id).Select(z => new ProcessVM
             {
                 PostalCode = z.ProcessPostalCodes.Select(a => a.PostalCode.Code).ToList(),
+                // url failed list
                 DateAdded = z.DateAdded,
                 DateModified = z.DateModified,
                 PropertyType = z.PropertyType,
