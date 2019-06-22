@@ -21,8 +21,7 @@
                         <div class="row">
                             <div class="col">
                                 <label class="col-form-label" for="postalCodes">Postal Codes</label>
-                                <select data-placeholder="ALL if none is selected" class="form-control" name="postalCodes" id="postalCodes" multiple asp-items="@ViewBag.Postal">
-                                </select>
+                                <select data-placeholder="ALL if none is selected" class="form-control" name="postalCodes" id="postalCodes" multiple asp-items="@ViewBag.Postal"></select>
                             </div>
                             <div class="col">
                                 <label class="col-form-label" for="propertyType">Property Type</label>
@@ -34,11 +33,12 @@
                             </div>
                         </div>
                         <div class="row form-group" style="padding-top:25px;">
-                            <div class="col">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" name="isScheduled" value="true" id="schedule" />
-                                    <label class="custom-control-label" id="labelSchedule" for="schedule">Schedule</label>
-                                </div>
+                            <div class="col row" style="margin-left:15px;">
+                                <label class="switch switch-label switch-pill switch-outline-primary-alt" id="labelSchedule" for="schedule">
+                                    <input class="switch-input" type="checkbox" name="isScheduled" value="true" id="schedule">
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                                <label style="padding-left:10px;font-size:16px;">Schedule</label>
                             </div>
                             <div class="col">
                                 <select class="form-control" name="scheduleInterval" id="scheduleInterval" asp-items="@ViewBag.ScheduleIntervalType">
@@ -68,8 +68,16 @@
         $(document).ready(function () {
             $('#scheduleInterval').hide();
 
+            //$('#schedule').change(function () {
+            //    if ($('input.custom-control-input').is(':checked')) {
+            //        $('#scheduleInterval').show();
+            //    }
+            //    else {
+            //        $('#scheduleInterval').hide();
+            //    }
+            //});
             $('#schedule').change(function () {
-                if ($('input.custom-control-input').is(':checked')) {
+                if ($('input.switch-input').is(':checked')) {
                     $('#scheduleInterval').show();
                 }
                 else {

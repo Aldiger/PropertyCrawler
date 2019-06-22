@@ -4,11 +4,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card border-success mb-5" style="max-width: 70rem;margin-top:30px;">
-    <div class="card-header bg-success text-center"><h4>Edit Postal Code</h4> </div>
-    <div class="card-body text-success">
-        <form asp-action="Update" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="card">
+    <div class="card-header">
+        <strong>Update</strong> Postal Code
+    </div>
+    <div class="card-body">
+        <form action="Update" method="post">
             <div class="form-group">
                 <label asp-for="Code" class="control-label">Code</label>
                 <input asp-for="Code" class="form-control" />
@@ -19,14 +20,20 @@
                 <input asp-for="OpCode" class="form-control" />
                 <span asp-validation-for="OpCode" class="text-danger"></span>
             </div>
-            <div class="row bg-transparent border-success">
-                <div class="col" style="margin-left:30px;">
-                    <button type="submit" value="Update" class="btn btn-success" style="padding:6px 40px;">Update</button>
-                </div>
-                <div class="col text-right" style="margin-right:50px;">
-                    <a asp-action="Index">Back to List</a>
-                </div>
-            </div>
         </form>
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-outline-success" type="submit" value="Create" style="padding:6px 40px;">
+                    Update
+                </button>
+            </div>
+            <div class="col text-right">
+                <a asp-action="Index" class="btn btn-outline-info" style="padding:6px 40px;">
+                    Back to List
+                </a>
+            </div>
+        </div>
     </div>
 </div>
