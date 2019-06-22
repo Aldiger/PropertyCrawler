@@ -7,6 +7,7 @@ using PropertyCrawler.Data;
 using PropertyCrawler.Data.Repositories;
 using PropertyCrawlerWeb.Services;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -176,62 +177,122 @@ namespace PropertyCrawler.Test
             //await _context.SaveChangesAsync();
 
         }
+        [TestMethod]
+        public void Start()
+        {
+            var postalCodes = _context.PostalCodes.Where(x => x.Code.Contains("AB10")).ToList();
+            _jobService.Job(postalCodes, PropertyType.All, Data.Entity.ProcessType.Full, false,null);
+        }
+        [TestMethod]
+        public void InsertUpdatePortal()
+        {
+            var portal = _context.Portals.ToList();
+            portal[0].Url = "https://www.rightmove.co.uk";
+            portal[0].OutCodeKey = "OUTCODE%5E";
 
+            _context.Portals.Update(portal[0]);
+            _context.SaveChanges();
+        }
+        [TestMethod]
+        public void UpdateUrlPropertyCode()
+        {
+            var urls = _context.Urls.ToList();
+            urls.Where(x=>x.Active).ToList().ForEach(x => x.PropertyCode = int.Parse(
+                !string.IsNullOrEmpty(x.PropertyUrl)?
+                string.Join("", Regex.Matches(x.PropertyUrl, @"[0-9]").Select(a => a.Value)):"0"
+                
+                ));
+
+            _context.Urls.UpdateRange(urls);
+            _context.SaveChanges();
+        }
+        [TestMethod]
+        public void UpdateUrl_UrlTypeId()
+        {
+            var urlTypes = _context.UrlTypes.ToList();
+            var urls = _context.Urls.ToList();
+            urls.Where(x => x.Active).ToList().ForEach(x => x.UrlTypeId =urlTypes.FirstOrDefault(a=>x.PropertyUrl.Contains(a.UrlPortion)).Id );
+            var partitioner = Partitioner.Create(urls);
+            var parallelOptions = new ParallelOptions
+            {
+                MaxDegreeOfParallelism = Environment.ProcessorCount
+            };
+
+            Parallel.ForEach(partitioner, parallelOptions, (listItem, loopState) =>
+            {
+                var _appContext = new PropertyCrawler.Data.AppContext(true);
+                _appContext.Urls.Update(listItem);
+                _appContext.SaveChanges();
+            });
+
+        }
 
         [TestMethod]
         public void TestMethod2()
         {
             var appcontext = new PropertyCrawler.Data.AppContext(true);
-            var ddd = _postalCodeRepository.GetAll().ToList();
-            var dateNow = DateTime.UtcNow;
-            ///property-for-sale/property-81702935.html
-            appcontext.UrlTypes.AddRange(new List<UrlType>
-            {
-                new UrlType
-                {
-                    DateAdded = dateNow,
-                    Active = true,
-                    DateModified=dateNow,
-                    UrlPortion="/property-for-sale/property-",
-                },
-                new UrlType
-                {
-                    DateAdded = dateNow,
-                    Active = true,
-                    DateModified=dateNow,
-                    UrlPortion="/property-to-rent/property-",
-                },
-                 new UrlType
-                {
-                    DateAdded = dateNow,
-                    Active = true,
-                    DateModified=dateNow,
-                    UrlPortion="/commercial-property-for-sale/property-",
-                },
-                new UrlType
-                {
-                    DateAdded = dateNow,
-                    Active = true,
-                    DateModified=dateNow,
-                    UrlPortion="/commercial-property-to-let/property-",
-                }
-            }
-            );
+            // var ddd = _postalCodeRepository.GetAll().ToList();
+            //var dateNow = DateTime.UtcNow;
+            /////property-for-sale/property-81702935.html
+            //appcontext.UrlTypes.AddRange(new List<UrlType>
+            //{
+            //    new UrlType
+            //    {
+            //        DateAdded = dateNow,
+            //        Active = true,
+            //        DateModified=dateNow,
+            //        UrlPortion="/property-for-sale/property-",
+            //    },
+            //    new UrlType
+            //    {
+            //        DateAdded = dateNow,
+            //        Active = true,
+            //        DateModified=dateNow,
+            //        UrlPortion="/property-to-rent/property-",
+            //    },
+            //     new UrlType
+            //    {
+            //        DateAdded = dateNow,
+            //        Active = true,
+            //        DateModified=dateNow,
+            //        UrlPortion="/commercial-property-for-sale/property-",
+            //    },
+            //    new UrlType
+            //    {
+            //        DateAdded = dateNow,
+            //        Active = true,
+            //        DateModified=dateNow,
+            //        UrlPortion="/commercial-property-to-let/property-",
+            //    }
+            //}
+
+            //);
+
+            var urlTypes = appcontext.UrlTypes.ToList();
+            var urls = appcontext.Urls.ToList();
+
+            urls.ForEach(x => x.UrlTypeId = urlTypes.FirstOrDefault(a => x.PropertyUrl.Contains(a.UrlPortion))?.Id ?? 0);
+            appcontext.Urls.UpdateRange(urls);
+           
+
+            appcontext.SaveChanges();
 
         }
 
 
 
+
+
         private void LoadDependencies()
         {
-            var con = @"Server=localhost;Database=PropertiesDb;Trusted_Connection=True;";
+            var con = @"Server=.\Sqlexpress;Database=PropertiesDb;Trusted_Connection=True;";
             var services = new ServiceCollection();
             services.AddDbContext<Data.AppContext>(opts => opts.UseSqlServer(con));
             services.AddHangfire(x => x.UseSqlServerStorage(con));
 
 
-            services.AddTransient<IPostalCodeRepository, PostalCodeRepository>();
-            services.AddTransient<IProcessRepository, ProcessRepository>();
+            services.AddScoped<IPostalCodeRepository, PostalCodeRepository>();
+            services.AddScoped<IProcessRepository, ProcessRepository>();
             services.AddScoped<IJobService, JobService>();
             services.AddScoped<ICrawlerService, CrawlerService>();
 

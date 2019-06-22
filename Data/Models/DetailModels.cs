@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PropertyCrawler.Data.Models
+namespace PropertyCrawler.Models
 {
     public class Location
     {
@@ -16,11 +16,11 @@ namespace PropertyCrawler.Data.Models
     {
         public string propertyType { get; set; }
         public string propertySubType { get; set; }
-        public decimal price { get; set; }
+        public string price { get; set; }
         public int beds { get; set; }
         public string added { get; set; }
         public bool soldSTC { get; set; }
-        public bool retirement { get; set; }
+        //public bool retirement { get; set; }
         public string preOwned { get; set; }
         public string ownership { get; set; }
         public bool auctionOnly { get; set; }
