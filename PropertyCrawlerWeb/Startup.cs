@@ -56,10 +56,10 @@ namespace PropertyCrawlerWeb
             services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection")));
             services.AddHangfireServer();
 
-            services.AddTransient<IPostalCodeRepository, PostalCodeRepository>();
-            services.AddTransient<IProcessRepository, ProcessRepository>();
-            services.AddScoped<IJobService, JobService>();
+            services.AddScoped<IPostalCodeRepository, PostalCodeRepository>();
+            services.AddScoped<IProcessRepository, ProcessRepository>();
             services.AddScoped<ICrawlerService, CrawlerService>();
+            services.AddScoped<IJobService, JobService>();
 
 
             services.AddCloudscribePagination();

@@ -18,11 +18,7 @@ namespace PropertyCrawler.Data
         public DbSet<Process> Processes { get; set; }
         public DbSet<ProcessPostalCode> ProcessPostalCodes { get; set; }
         public DbSet<UrlType> UrlTypes { get; set; }
-
-        public DbSet<ProcessPostalCodeUrlFailed> ProcessPostalCodeUrlFaileds { get; set; }
-
-        //public DbSet<Process> Process { get; set; }
-        //public DbSet<ProcessPostalCode> ProcessPostalCode { get; set; }
+        public DbSet<ProcessPostalCodeUrlFailed> ProcessPostalCodeUrlFails { get; set; }
 
         public AppContext(DbContextOptions<AppContext> options) : base(options)
         {
@@ -41,7 +37,7 @@ namespace PropertyCrawler.Data
         {
             if (console)
             {
-                optionsBuilder.UseSqlServer(@"Server=localhost;Database=PropertiesDb;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(@"Server=.\SQLExpress;Database=PropertiesDb;Trusted_Connection=True;");
             }
         }
     }

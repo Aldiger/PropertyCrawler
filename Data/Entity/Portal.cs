@@ -10,6 +10,7 @@ namespace PropertyCrawler.Data
         }
         public string Name { get; set; }
         public string Url { get; set; }
+        public string OutCodeKey { get; set; }
 
         public ICollection<Url> Urls { get; set; }
     }
