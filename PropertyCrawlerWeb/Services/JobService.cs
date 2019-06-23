@@ -45,16 +45,41 @@ namespace PropertyCrawlerWeb.Services
             if (isScheduled)
             {
 
+                var cron = Cron.Daily();
+                switch (scheduleInterval)
+                {
+                    case ScheduleInterval.Monthly:
+                        cron = Cron.Monthly();
+                        break;
+                    default:
+                        break;
+                }
+
+                RecurringJob.AddOrUpdate(
+                    () => Recurrency(postalCodes,propertyType, process),
+                    cron);
+            }
+            else
+            {
+                var jobId = BackgroundJob.Enqueue(() => _crawlerService.PropertiesCrawler(postalCodes, process, propertyType));
+
+
+                //update process status
+                BackgroundJob.ContinueJobWith(jobId, () => Execute(jobId, process.Id), JobContinuationOptions.OnAnyFinishedState);
+
             }
 
+
+        }
+        public void Recurrency(List<PostalCode> postalCodes, PropertyType propertyType, Process process)
+        {
             var jobId = BackgroundJob.Enqueue(() => _crawlerService.PropertiesCrawler(postalCodes, process, propertyType));
 
 
             //update process status
             BackgroundJob.ContinueJobWith(jobId, () => Execute(jobId, process.Id), JobContinuationOptions.OnAnyFinishedState);
-
         }
-        private void Execute(string jobId, int processId)
+        public void Execute(string jobId, int processId)
         {
             using (Hangfire.Storage.IStorageConnection connection = JobStorage.Current.GetConnection())
             {
