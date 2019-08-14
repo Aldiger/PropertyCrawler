@@ -129,7 +129,7 @@ namespace PropertyCrawlerWeb.Services
 
                 var proxy = new WebProxy()
                 {
-                    Address = new Uri($"{proxyIp.Ip}:4444"),/*:{proxyPort}*/
+                    Address = new Uri($"http://{proxyIp.Ip}"),/*:{proxyPort}*/
                     BypassProxyOnLocal = false,
                     UseDefaultCredentials = false,
 

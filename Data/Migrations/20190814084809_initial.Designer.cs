@@ -10,8 +10,8 @@ using PropertyCrawler.Data;
 namespace PropertyCrawler.Data.Migrations
 {
     [DbContext(typeof(AppContext))]
-    [Migration("20190615091233_change")]
-    partial class change
+    [Migration("20190814084809_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,6 +56,110 @@ namespace PropertyCrawler.Data.Migrations
                     b.ToTable("Agents");
                 });
 
+            modelBuilder.Entity("PropertyCrawler.Data.Entity.Process", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<DateTime>("DateAdded");
+
+                    b.Property<DateTime>("DateModified");
+
+                    b.Property<int?>("JobId");
+
+                    b.Property<int>("PropertyType");
+
+                    b.Property<int?>("Retry");
+
+                    b.Property<int>("Status");
+
+                    b.Property<int>("Type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Processes");
+                });
+
+            modelBuilder.Entity("PropertyCrawler.Data.Entity.ProcessPostalCode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<DateTime>("DateAdded");
+
+                    b.Property<DateTime>("DateModified");
+
+                    b.Property<int>("PostalCodeId");
+
+                    b.Property<int>("ProcessId");
+
+                    b.Property<int>("Status");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostalCodeId");
+
+                    b.HasIndex("ProcessId");
+
+                    b.ToTable("ProcessPostalCodes");
+                });
+
+            modelBuilder.Entity("PropertyCrawler.Data.Entity.ProcessPostalCodeUrlFailed", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<DateTime>("DateAdded");
+
+                    b.Property<DateTime>("DateModified");
+
+                    b.Property<string>("FailReason");
+
+                    b.Property<int>("ProcessPostalCodeId");
+
+                    b.Property<int>("UrlId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProcessPostalCodeId");
+
+                    b.HasIndex("UrlId");
+
+                    b.ToTable("ProcessPostalCodeUrlFails");
+                });
+
+            modelBuilder.Entity("PropertyCrawler.Data.Entity.ProxyIp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<DateTime>("DateAdded");
+
+                    b.Property<DateTime>("DateModified");
+
+                    b.Property<string>("Ip");
+
+                    b.Property<string>("Password");
+
+                    b.Property<string>("Username");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProxyIps");
+                });
+
             modelBuilder.Entity("PropertyCrawler.Data.Image", b =>
                 {
                     b.Property<int>("Id")
@@ -95,6 +199,8 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<string>("OutCodeKey");
+
                     b.Property<string>("Url");
 
                     b.HasKey("Id");
@@ -115,8 +221,6 @@ namespace PropertyCrawler.Data.Migrations
                     b.Property<DateTime>("DateAdded");
 
                     b.Property<DateTime>("DateModified");
-
-                    b.Property<string>("OpCode");
 
                     b.Property<int>("OutCode");
 
@@ -202,8 +306,6 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<int?>("PropertyId");
-
                     b.HasKey("Id");
 
                     b.ToTable("PropertyDescriptions");
@@ -252,8 +354,6 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.Property<int>("PropertyCode");
 
-                    b.Property<string>("PropertyUrl");
-
                     b.Property<int>("Type");
 
                     b.Property<int?>("UrlTypeId");
@@ -285,7 +385,33 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UrlType");
+                    b.ToTable("UrlTypes");
+                });
+
+            modelBuilder.Entity("PropertyCrawler.Data.Entity.ProcessPostalCode", b =>
+                {
+                    b.HasOne("PropertyCrawler.Data.PostalCode", "PostalCode")
+                        .WithMany()
+                        .HasForeignKey("PostalCodeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("PropertyCrawler.Data.Entity.Process", "Process")
+                        .WithMany("ProcessPostalCodes")
+                        .HasForeignKey("ProcessId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("PropertyCrawler.Data.Entity.ProcessPostalCodeUrlFailed", b =>
+                {
+                    b.HasOne("PropertyCrawler.Data.Entity.ProcessPostalCode", "ProcessPostalCode")
+                        .WithMany("ProcessPostalCodeUrlFails")
+                        .HasForeignKey("ProcessPostalCodeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("PropertyCrawler.Data.Url", "Url")
+                        .WithMany("ProcessPostalCodeUrlFaileds")
+                        .HasForeignKey("UrlId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("PropertyCrawler.Data.Image", b =>

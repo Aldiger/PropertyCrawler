@@ -47,7 +47,7 @@ namespace PropertyCrawlerWeb.Controllers
 
 
 
-        public async Task<IActionResult> List(string param, int? pageNumber)
+        public async Task<IActionResult> Index(string param, int? pageNumber)
         {
 
             if (!pageNumber.HasValue || pageNumber < 1)
@@ -89,7 +89,7 @@ namespace PropertyCrawlerWeb.Controllers
             await _jobService.Job(listPostalCodes, propertyType, processType, isScheduled, scheduleInterval, proxy);
 
 
-            return RedirectToAction(nameof(List));
+            return RedirectToAction(nameof(Index));
         }
 
 
@@ -110,7 +110,7 @@ namespace PropertyCrawlerWeb.Controllers
 
             await _jobService.Job(postalCodes, propertyType, processType, isScheduled, scheduleInterval: null,proxyIp: null);
 
-            return RedirectToAction(nameof(List));
+            return RedirectToAction(nameof(Index));
 
         }
 

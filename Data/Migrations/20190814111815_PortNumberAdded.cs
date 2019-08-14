@@ -2,21 +2,21 @@
 
 namespace PropertyCrawler.Data.Migrations
 {
-    public partial class addretrytoprocesstable : Migration
+    public partial class PortNumberAdded : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "Retry",
-                table: "Processes",
+            migrationBuilder.AddColumn<string>(
+                name: "Port",
+                table: "ProxyIps",
                 nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Retry",
-                table: "Processes");
+                name: "Port",
+                table: "ProxyIps");
         }
     }
 }

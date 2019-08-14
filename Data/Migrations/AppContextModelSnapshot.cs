@@ -149,6 +149,12 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.Property<string>("Ip");
 
+                    b.Property<string>("Password");
+
+                    b.Property<string>("Port");
+
+                    b.Property<string>("Username");
+
                     b.HasKey("Id");
 
                     b.ToTable("ProxyIps");

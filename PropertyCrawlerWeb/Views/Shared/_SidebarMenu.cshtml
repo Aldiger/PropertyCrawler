@@ -8,38 +8,49 @@
         <nav class="sidebar-nav">
             <ul class="nav">
                 <li class="nav-item nav-dropdown">
-                    <a class="nav-link nav-dropdown-toggle">
-                        <i class="nav-icon icon-puzzle"></i> Postal Codes
+                    <a class="nav-link nav-dropdown-toggle" style="cursor: pointer;">
+                        <i class="nav-icon icon-envelope-letter"></i> Postal Codes
                     </a>
                     <ul class="nav-dropdown-items">
                         <li class="nav-item">
                             <a class="nav-link" asp-action="Index" asp-controller="PostalCode">
-                                List of Postal Codes
+                                <i class="nav-icon icon-list"></i> List of Postal Codes
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-action="Create" asp-controller="PostalCode">
-                                Create new Postal Code
+                                <i class="nav-icon icon-note"></i> Add Postal Code
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-action="Search" asp-controller="PostalCode">
-                                Search Postal Codes
+                                <i class="nav-icon icon-magnifier"></i> Search Postal Codes
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item nav-dropdown">
-                    <a class="nav-link nav-dropdown-toggle">
-                        <i class="nav-icon card-header-icon-bg"></i> Processes
+                    <a class="nav-link nav-dropdown-toggle" style="cursor: pointer;">
+                        <i class="nav-icon icon-layers"></i> Processes
                     </a>
                     <ul class="nav-dropdown-items">
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Process" asp-action="Configure">
-                                <i class="icons font-2xl d-block mt-5 cui-settings"></i> Cofigure a Process
+                                <i class="nav-icon icon-plus"></i> Create Process
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Process" asp-action="Index">
+                                <i class="nav-icon icon-list"></i> Processes List
                             </a>
                         </li>
                     </ul>
+                </li>
+
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link" style="cursor: pointer;" href="~/hangfire">
+                        <i class="nav-icon icon-fire"></i> Hangfire
+                    </a>
                 </li>
             </ul>
 

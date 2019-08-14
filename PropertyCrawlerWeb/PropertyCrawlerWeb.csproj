@@ -10,6 +10,24 @@
     <Compile Remove="Services\CrawlerService - Copy.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="wwwroot\node_modules\Coreui\icons\css\coreui-icons.min.css" />
+    <Content Include="wwwroot\node_modules\flag-icon-css\css\flag-icon.min.css" />
+    <Content Include="wwwroot\node_modules\font-awesome\css\font-awesome.min.css" />
+    <Content Include="wwwroot\node_modules\simple-line-icons\css\simple-line-icons.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\node_modules\bootstrap\dist\js\bootstrap.min.js" />
+    <None Include="wwwroot\node_modules\chart.js\dist\Chart.min.js" />
+    <None Include="wwwroot\node_modules\Coreui\coreui-plugin-chartjs-custom-tooltips\dist\js\custom-tooltips.min.js" />
+    <None Include="wwwroot\node_modules\Coreui\coreui\dist\js\coreui.min.js" />
+    <None Include="wwwroot\node_modules\jquery\dist\jquery.min.js" />
+    <None Include="wwwroot\node_modules\pace-progress\pace.min.js" />
+    <None Include="wwwroot\node_modules\perfect-scrollbar\dist\perfect-scrollbar.min.js" />
+    <None Include="wwwroot\node_modules\popper.js\dist\umd\popper.min.js" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="cloudscribe.Web.Pagination" Version="2.1.9" />
