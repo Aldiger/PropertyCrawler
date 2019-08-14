@@ -41,7 +41,25 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Process" asp-action="Index">
-                                <i class="nav-icon icon-list"></i> Processes List
+                                <i class="nav-icon icon-list"></i> Process List
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link nav-dropdown-toggle" style="cursor: pointer;">
+                        <i class="nav-icon icon-ghost"></i> Proxy Ips
+                    </a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="ProxyIps" asp-action="Index">
+                                <i class="nav-icon icon-list"></i> Ip List
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="ProxyIps" asp-action="Create">
+                                <i class="nav-icon icon-plus"></i> Add Ip
                             </a>
                         </li>
                     </ul>
