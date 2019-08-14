@@ -8,18 +8,20 @@ namespace PropertyCrawler.Data.Entity
     {
         public ProcessType Type { get; set; }
         public ProcessStatus Status { get; set; }
+        public int? JobId { get; set; }
+        public int? Retry { get; set; }
 
         public PropertyType PropertyType { get; set; }
+
 
         public virtual List<ProcessPostalCode> ProcessPostalCodes { get; set; }
     }
 
     public enum ProcessType
     {
-        Full,
         Update_Price,
-        Url,
-        Properties
+        LastWeek,
+        LastTwoWeeks
     }
     public enum ProcessStatus
     {

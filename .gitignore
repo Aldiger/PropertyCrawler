@@ -53,3 +53,7 @@
 /PropertyCrawler.Test/obj
 /PropertyCrawler.Test/bin/Debug/netcoreapp2.2
 /PropertyCrawlerWeb/Services/AuthorizeService.cs
+/Data/bin/Release/netcoreapp2.2
+/PropertyCrawler.Test/bin/Release/netcoreapp2.2
+/PropertyCrawlerWeb/bin/Release/netcoreapp2.2
+/PropertyCrawler/bin/Release/netcoreapp2.2

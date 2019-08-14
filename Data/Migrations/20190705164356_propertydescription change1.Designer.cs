@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PropertyCrawler.Data;
 
 namespace PropertyCrawler.Data.Migrations
 {
     [DbContext(typeof(AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20190705164356_propertydescription change1")]
+    partial class propertydescriptionchange1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -216,6 +218,8 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.Property<DateTime>("DateModified");
 
+                    b.Property<string>("OpCode");
+
                     b.Property<int>("OutCode");
 
                     b.HasKey("Id");
@@ -347,6 +351,8 @@ namespace PropertyCrawler.Data.Migrations
                     b.Property<int>("PostalCodeId");
 
                     b.Property<int>("PropertyCode");
+
+                    b.Property<string>("PropertyUrl");
 
                     b.Property<int>("Type");
 

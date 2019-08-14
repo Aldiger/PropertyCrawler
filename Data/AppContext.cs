@@ -19,6 +19,8 @@ namespace PropertyCrawler.Data
         public DbSet<ProcessPostalCode> ProcessPostalCodes { get; set; }
         public DbSet<UrlType> UrlTypes { get; set; }
         public DbSet<ProcessPostalCodeUrlFailed> ProcessPostalCodeUrlFails { get; set; }
+        public DbSet<ProxyIp> ProxyIps { get; set; }
+
 
         public AppContext(DbContextOptions<AppContext> options) : base(options)
         {
@@ -37,7 +39,7 @@ namespace PropertyCrawler.Data
         {
             if (console)
             {
-                optionsBuilder.UseSqlServer(@"Server=localhost;Database=PropertiesDb;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer(@"Server=.\sqlexpress;Database=PropertiesDb;Trusted_Connection=True;");
             }
         }
     }

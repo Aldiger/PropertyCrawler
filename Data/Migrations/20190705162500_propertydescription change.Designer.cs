@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PropertyCrawler.Data;
 
 namespace PropertyCrawler.Data.Migrations
 {
     [DbContext(typeof(AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20190705162500_propertydescription change")]
+    partial class propertydescriptionchange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -216,6 +218,8 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.Property<DateTime>("DateModified");
 
+                    b.Property<string>("OpCode");
+
                     b.Property<int>("OutCode");
 
                     b.HasKey("Id");
@@ -277,9 +281,7 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.HasIndex("AgentId");
 
-                    b.HasIndex("PropertyDescriptionId")
-                        .IsUnique()
-                        .HasFilter("[PropertyDescriptionId] IS NOT NULL");
+                    b.HasIndex("PropertyDescriptionId");
 
                     b.HasIndex("UrlId");
 
@@ -300,7 +302,11 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<int?>("PropertyId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PropertyId");
 
                     b.ToTable("PropertyDescriptions");
                 });
@@ -347,6 +353,8 @@ namespace PropertyCrawler.Data.Migrations
                     b.Property<int>("PostalCodeId");
 
                     b.Property<int>("PropertyCode");
+
+                    b.Property<string>("PropertyUrl");
 
                     b.Property<int>("Type");
 
@@ -424,12 +432,19 @@ namespace PropertyCrawler.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("PropertyCrawler.Data.PropertyDescription", "PropertyDescription")
-                        .WithOne("Property")
-                        .HasForeignKey("PropertyCrawler.Data.Property", "PropertyDescriptionId");
+                        .WithMany()
+                        .HasForeignKey("PropertyDescriptionId");
 
                     b.HasOne("PropertyCrawler.Data.Url", "Url")
                         .WithMany()
                         .HasForeignKey("UrlId");
+                });
+
+            modelBuilder.Entity("PropertyCrawler.Data.PropertyDescription", b =>
+                {
+                    b.HasOne("PropertyCrawler.Data.Property", "Property")
+                        .WithMany()
+                        .HasForeignKey("PropertyId");
                 });
 
             modelBuilder.Entity("PropertyCrawler.Data.PropertyPrice", b =>

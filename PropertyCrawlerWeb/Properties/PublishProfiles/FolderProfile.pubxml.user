@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\Users\aldig\source\RightMove\PropertyCrawler\PropertyCrawlerWeb\bin\Release\netcoreapp2.2\publish\</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="appsettings.Development.json">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="appsettings.json">
+      <publishTime>07/14/2019 14:02:12</publishTime>
+    </File>
+    <File Include="cloudscribe.Pagination.Models.dll">
+      <publishTime>04/05/2019 14:47:38</publishTime>
+    </File>
+    <File Include="cloudscribe.Web.Pagination.dll">
+      <publishTime>04/23/2019 13:15:42</publishTime>
+    </File>
+    <File Include="dotnet-aspnet-codegenerator-design.dll">
+      <publishTime>03/02/2019 19:52:30</publishTime>
+    </File>
+    <File Include="es/Hangfire.Core.resources.dll">
+      <publishTime>05/23/2019 15:21:16</publishTime>
+    </File>
+    <File Include="Hangfire.AspNetCore.dll">
+      <publishTime>05/23/2019 15:21:26</publishTime>
+    </File>
+    <File Include="Hangfire.Core.dll">
+      <publishTime>05/23/2019 15:21:16</publishTime>
+    </File>
+    <File Include="Hangfire.SqlServer.dll">
+      <publishTime>05/23/2019 15:21:20</publishTime>
+    </File>
+    <File Include="HtmlAgilityPack.dll">
+      <publishTime>05/31/2019 19:07:08</publishTime>
+    </File>
+    <File Include="libman.json">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="Microsoft.CodeAnalysis.CSharp.Workspaces.dll">
+      <publishTime>07/16/2019 10:47:33</publishTime>
+    </File>
+    <File Include="Microsoft.CodeAnalysis.Workspaces.dll">
+      <publishTime>07/16/2019 10:47:28</publishTime>
+    </File>
+    <File Include="Microsoft.EntityFrameworkCore.Abstractions.dll">
+      <publishTime>03/22/2019 05:06:24</publishTime>
+    </File>
+    <File Include="Microsoft.EntityFrameworkCore.dll">
+      <publishTime>03/22/2019 05:06:32</publishTime>
+    </File>
+    <File Include="Microsoft.EntityFrameworkCore.Relational.dll">
+      <publishTime>03/22/2019 05:06:34</publishTime>
+    </File>
+    <File Include="Microsoft.EntityFrameworkCore.SqlServer.dll">
+      <publishTime>03/22/2019 05:06:58</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll">
+      <publishTime>03/02/2019 19:51:56</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Core.dll">
+      <publishTime>03/02/2019 19:52:00</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.dll">
+      <publishTime>03/02/2019 19:52:04</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll">
+      <publishTime>03/02/2019 19:52:02</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll">
+      <publishTime>03/02/2019 19:51:58</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll">
+      <publishTime>03/02/2019 19:51:56</publishTime>
+    </File>
+    <File Include="Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll">
+      <publishTime>03/02/2019 19:52:04</publishTime>
+    </File>
+    <File Include="nl/Hangfire.Core.resources.dll">
+      <publishTime>05/23/2019 15:21:16</publishTime>
+    </File>
+    <File Include="NuGet.Frameworks.dll">
+      <publishTime>07/16/2019 10:47:31</publishTime>
+    </File>
+    <File Include="PropertyCrawler.Data.dll">
+      <publishTime>08/09/2019 18:58:20</publishTime>
+    </File>
+    <File Include="PropertyCrawler.Data.pdb">
+      <publishTime>08/09/2019 18:58:20</publishTime>
+    </File>
+    <File Include="PropertyCrawlerWeb.deps.json">
+      <publishTime>08/09/2019 19:09:01</publishTime>
+    </File>
+    <File Include="PropertyCrawlerWeb.dll">
+      <publishTime>08/09/2019 19:08:46</publishTime>
+    </File>
+    <File Include="PropertyCrawlerWeb.pdb">
+      <publishTime>08/09/2019 19:08:46</publishTime>
+    </File>
+    <File Include="PropertyCrawlerWeb.runtimeconfig.json">
+      <publishTime>08/09/2019 19:09:02</publishTime>
+    </File>
+    <File Include="PropertyCrawlerWeb.Views.dll">
+      <publishTime>08/09/2019 19:08:50</publishTime>
+    </File>
+    <File Include="PropertyCrawlerWeb.Views.pdb">
+      <publishTime>08/09/2019 19:08:50</publishTime>
+    </File>
+    <File Include="Remotion.Linq.dll">
+      <publishTime>07/16/2019 10:47:34</publishTime>
+    </File>
+    <File Include="System.Composition.AttributedModel.dll">
+      <publishTime>07/16/2019 10:47:36</publishTime>
+    </File>
+    <File Include="System.Composition.Convention.dll">
+      <publishTime>07/16/2019 10:47:36</publishTime>
+    </File>
+    <File Include="System.Composition.Hosting.dll">
+      <publishTime>07/16/2019 10:47:36</publishTime>
+    </File>
+    <File Include="System.Composition.Runtime.dll">
+      <publishTime>07/16/2019 10:47:36</publishTime>
+    </File>
+    <File Include="System.Composition.TypedParts.dll">
+      <publishTime>07/16/2019 10:47:36</publishTime>
+    </File>
+    <File Include="System.Interactive.Async.dll">
+      <publishTime>02/10/2019 15:34:24</publishTime>
+    </File>
+    <File Include="System.Xml.XPath.XmlDocument.dll">
+      <publishTime>11/05/2016 04:57:34</publishTime>
+    </File>
+    <File Include="web.config">
+      <publishTime>08/09/2019 19:09:02</publishTime>
+    </File>
+    <File Include="wwwroot/css/site.css">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/css/style.css">
+      <publishTime>06/21/2019 23:15:21</publishTime>
+    </File>
+    <File Include="wwwroot/css/style.css.map">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/css/style.min.css">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/css/style.min.css.map">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/favicon.ico">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/icons/coreui-icons.html">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/icons/flags.html">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/icons/font-awesome.html">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/icons/simple-line-icons.html">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/img/avatars/1.jpg">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/img/avatars/2.jpg">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/img/avatars/3.jpg">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/img/avatars/4.jpg">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/img/avatars/5.jpg">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/img/avatars/6.jpg">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/img/avatars/7.jpg">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/img/avatars/8.jpg">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/img/brand/logo.svg">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/img/brand/sygnet.svg">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/img/favicon.ico">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/js/charts.js">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/js/charts.js.map">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/js/colors.js">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/js/colors.js.map">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/js/main.js">
+      <publishTime>06/18/2019 10:31:22</publishTime>
+    </File>
+    <File Include="wwwroot/js/main.js.map">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/js/popovers.js">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/js/popovers.js.map">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/js/site.js">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/js/src/charts.js">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/js/src/colors.js">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/js/src/main.js">
+      <publishTime>06/18/2019 10:31:22</publishTime>
+    </File>
+    <File Include="wwwroot/js/src/popovers.js">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/js/src/tooltips.js">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/js/src/widgets.js">
+      <publishTime>06/18/2019 10:31:22</publishTime>
+    </File>
+    <File Include="wwwroot/js/tooltips.js">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/js/tooltips.js.map">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/js/widgets.js">
+      <publishTime>06/18/2019 10:31:22</publishTime>
+    </File>
+    <File Include="wwwroot/js/widgets.js.map">
+      <publishTime>06/07/2019 12:44:54</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap-grid.css.map">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap-grid.min.css.map">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.css.map">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap-reboot.min.css.map">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap.css">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap.css.map">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap.min.css">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js.map">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/js/bootstrap.js">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/js/bootstrap.js.map">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/js/bootstrap.min.js">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/js/bootstrap.min.js.map">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/LICENSE">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/chosen-sprite%402x.png">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/chosen-sprite.png">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/chosen.css">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/chosen.jquery.js">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/chosen.jquery.min.js">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/chosen.min.css">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/chosen.proto.js">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/chosen.proto.min.js">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/composer.json">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/docsupport/chosen.png">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/docsupport/init.js">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/docsupport/init.proto.js">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/docsupport/jquery-1.12.4.min.js">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/docsupport/jquery-3.2.1.min.js">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/docsupport/oss-credit.png">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/docsupport/prism.css">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/docsupport/prism.js">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/docsupport/prototype-1.7.0.0.js">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/docsupport/style.css">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/index.html">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/index.proto.html">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/LICENSE.md">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-chosen/options.html">
+      <publishTime>06/07/2019 19:04:26</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation/dist/additional-methods.js">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation/dist/additional-methods.min.js">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation/dist/jquery.validate.js">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation/dist/jquery.validate.min.js">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation/LICENSE.md">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery/dist/jquery.js">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery/dist/jquery.min.js">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery/dist/jquery.min.map">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery/LICENSE.txt">
+      <publishTime>06/04/2019 10:45:17</publishTime>
+    </File>
+    <File Include="wwwroot/scss/style.scss">
+      <publishTime>06/07/2019 12:45:31</publishTime>
+    </File>
+    <File Include="wwwroot/scss/vendors/pace-progress/pace.scss">
+      <publishTime>06/07/2019 12:45:31</publishTime>
+    </File>
+    <File Include="wwwroot/scss/vendors/_variables.scss">
+      <publishTime>06/07/2019 12:45:31</publishTime>
+    </File>
+    <File Include="wwwroot/scss/_custom.scss">
+      <publishTime>06/07/2019 12:45:31</publishTime>
+    </File>
+    <File Include="wwwroot/scss/_variables.scss">
+      <publishTime>06/07/2019 12:45:31</publishTime>
+    </File>
+    <File Include="wwwroot/vendors/pace-progress/css/pace.css">
+      <publishTime>06/07/2019 12:45:31</publishTime>
+    </File>
+    <File Include="wwwroot/vendors/pace-progress/css/pace.css.map">
+      <publishTime>06/07/2019 12:45:31</publishTime>
+    </File>
+    <File Include="wwwroot/vendors/pace-progress/css/pace.min.css">
+      <publishTime>06/07/2019 12:45:31</publishTime>
+    </File>
+    <File Include="wwwroot/vendors/pace-progress/css/pace.min.css.map">
+      <publishTime>06/07/2019 12:45:31</publishTime>
+    </File>
+    <File Include="zh-TW/Hangfire.Core.resources.dll">
+      <publishTime>05/23/2019 15:21:16</publishTime>
+    </File>
+    <File Include="zh/Hangfire.Core.resources.dll">
+      <publishTime>05/23/2019 15:21:16</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

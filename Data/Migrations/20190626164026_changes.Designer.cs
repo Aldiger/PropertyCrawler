@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PropertyCrawler.Data;
 
 namespace PropertyCrawler.Data.Migrations
 {
     [DbContext(typeof(AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20190626164026_changes")]
+    partial class changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,8 +71,6 @@ namespace PropertyCrawler.Data.Migrations
                     b.Property<int?>("JobId");
 
                     b.Property<int>("PropertyType");
-
-                    b.Property<int?>("Retry");
 
                     b.Property<int>("Status");
 
@@ -135,25 +135,6 @@ namespace PropertyCrawler.Data.Migrations
                     b.ToTable("ProcessPostalCodeUrlFails");
                 });
 
-            modelBuilder.Entity("PropertyCrawler.Data.Entity.ProxyIp", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Active");
-
-                    b.Property<DateTime>("DateAdded");
-
-                    b.Property<DateTime>("DateModified");
-
-                    b.Property<string>("Ip");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ProxyIps");
-                });
-
             modelBuilder.Entity("PropertyCrawler.Data.Image", b =>
                 {
                     b.Property<int>("Id")
@@ -215,6 +196,8 @@ namespace PropertyCrawler.Data.Migrations
                     b.Property<DateTime>("DateAdded");
 
                     b.Property<DateTime>("DateModified");
+
+                    b.Property<string>("OpCode");
 
                     b.Property<int>("OutCode");
 
@@ -300,6 +283,8 @@ namespace PropertyCrawler.Data.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<int?>("PropertyId");
+
                     b.HasKey("Id");
 
                     b.ToTable("PropertyDescriptions");
@@ -347,6 +332,8 @@ namespace PropertyCrawler.Data.Migrations
                     b.Property<int>("PostalCodeId");
 
                     b.Property<int>("PropertyCode");
+
+                    b.Property<string>("PropertyUrl");
 
                     b.Property<int>("Type");
 

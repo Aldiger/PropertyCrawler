@@ -34,6 +34,9 @@ namespace PropertyCrawlerWeb.Controllers
         public async Task<IActionResult> Configure()
         {
             var lista = await _repoPostalCode.AllPostalCodesSelect();
+            var proxyIps = _context.ProxyIps.Where(x=>x.Active).Select(x=>x.Ip).ToList();
+            ViewBag.ProxyIps = new SelectList(proxyIps, "Text");
+            
             ViewBag.Postal = new SelectList(lista, "Text");
             ViewBag.PropertyType = new SelectList(EnumHelper.PropertyTypeList(), "Id", "Text");
             ViewBag.ProcessType = new SelectList(EnumHelper.ProcessTypeList(), "Id", "Text");
@@ -72,36 +75,18 @@ namespace PropertyCrawlerWeb.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Execute(List<string> postalCodes, PropertyType propertyType, ProcessType processType, bool isScheduled, ScheduleInterval? scheduleInterval, string ip, string portal)
+        public async Task<IActionResult> Execute(List<string> postalCodes, PropertyType propertyType, ProcessType processType, bool isScheduled, ScheduleInterval? scheduleInterval, string proxyIp, string portal)
         {
             if (isScheduled == true && scheduleInterval == null)
             {
                 return BadRequest("Model is not valid");
             }
 
-            var lista = await _repoPostalCode.GetPostalCodesAsync(postalCodes);
-            var process = new Process
-            {
-                DateAdded = DateTime.UtcNow,
-                Active = true,
-                Status = ProcessStatus.Failed,
-                Type = processType,
-                PropertyType = propertyType,
-                DateModified = DateTime.UtcNow,
-                ProcessPostalCodes = lista.Select(x => new ProcessPostalCode
-                {
-                    PostalCodeId = x.Id,
-                    DateAdded = DateTime.UtcNow,
-                    Active = true,
-                }).ToList()
-            };
-            await _context.Processes.AddAsync(process);
-            await _context.SaveChangesAsync();
-
-
+            var listPostalCodes = await _repoPostalCode.GetPostalCodesAsync(postalCodes);
+            var proxy = _context.ProxyIps.FirstOrDefault(x => x.Ip == proxyIp);
 
             //do thirret service
-            await _jobService.Job(lista, propertyType, processType, isScheduled, scheduleInterval);
+            await _jobService.Job(listPostalCodes, propertyType, processType, isScheduled, scheduleInterval, proxy);
 
 
             return RedirectToAction(nameof(List));
@@ -123,7 +108,7 @@ namespace PropertyCrawlerWeb.Controllers
             ProcessType processType = model.Type;
             bool isScheduled = false;
 
-            await _jobService.Job(postalCodes, propertyType, processType, isScheduled, scheduleInterval: null);
+            await _jobService.Job(postalCodes, propertyType, processType, isScheduled, scheduleInterval: null,proxyIp: null);
 
             return RedirectToAction(nameof(List));
 

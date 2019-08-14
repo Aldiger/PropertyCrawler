@@ -43,7 +43,7 @@ namespace PropertyCrawler.Data.Repositories
                 Code = x.Code,
                 DateAdded = x.DateAdded,
                 DateModified = x.DateModified,
-                OpCode = x.OpCode,
+                //OpCode = x.OpCode,
                 Properties = x.Urls.Count
             }).FirstOrDefaultAsync();
         }
@@ -77,7 +77,7 @@ namespace PropertyCrawler.Data.Repositories
                     Code = x.Code,
                     DateAdded = x.DateAdded,
                     DateModified = x.DateModified,
-                    OpCode = x.OpCode,
+                    //OpCode = x.OpCode,
                     Properties = x.Urls.Count
 
                 }).AsQueryable();
@@ -109,7 +109,7 @@ namespace PropertyCrawler.Data.Repositories
                     Code = x.Code,
                     DateAdded = x.DateAdded,
                     DateModified = x.DateModified,
-                    OpCode = x.OpCode,
+                    //OpCode = x.OpCode,
                     Properties = x.Urls.Count
 
                 }).AsQueryable();
@@ -144,7 +144,7 @@ namespace PropertyCrawler.Data.Repositories
             _context.PostalCodes.Add(new PostalCode
             {
                 Code = model.Code,
-                OpCode = model.OpCode,
+               // OpCode = model.OpCode,
                 Urls = null,
                 DateAdded = DateTime.UtcNow,
                 Active = true
@@ -162,7 +162,7 @@ namespace PropertyCrawler.Data.Repositories
             dbModel.Code = model.Code;
             dbModel.DateAdded = model.DateAdded;
             dbModel.Active = true;
-            dbModel.OpCode = model.OpCode;
+            //dbModel.OpCode = model.OpCode;
 
             _context.Entry(dbModel).State = EntityState.Modified;
             await _context.SaveChangesAsync();

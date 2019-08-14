@@ -34,7 +34,7 @@ namespace PropertyCrawler.Test
         public void TestMethod1()
         {
             var postalCode = _postalCodeRepository.GetAll().Take(2).ToList();
-            _jobService.Job(postalCode, PropertyType.All, Data.Entity.ProcessType.Full, isScheduled: false, scheduleInterval: ScheduleInterval.Daily
+            _jobService.Job(postalCode, PropertyType.All, Data.Entity.ProcessType.Update_Price, isScheduled: false, scheduleInterval: ScheduleInterval.Daily, proxyIp:null
                 );
         }
 
@@ -108,7 +108,7 @@ namespace PropertyCrawler.Test
                         var pricesList = pricesNodes.Distinct().ToList();
 
                         linksList = linksList.Where(x=>!string.IsNullOrEmpty(x)).Distinct().ToList();
-                        var urls = linksList.Select(x => new Url { PropertyUrl = x, Type = (int)PropertyType.Rent, PortalId = 1, DateModified = DateTime.Now, DateAdded = DateTime.Now, Active = true, PostalCodeId = cod.Id });
+                        var urls = linksList.Select(x => new Url { /*PropertyUrl = x,*/ Type = (int)PropertyType.Rent, PortalId = 1, DateModified = DateTime.Now, DateAdded = DateTime.Now, Active = true, PostalCodeId = cod.Id });
                         var price = pricesList.Select(x => new PropertyPrice { Price = Convert.ToDecimal(x), DateAdded = DateTime.Now, DateModified = DateTime.Now });
                         
                         //context.Urls.AddRange(urls);
@@ -144,7 +144,7 @@ namespace PropertyCrawler.Test
 
             foreach (var item in postalcode)
             {
-                var stringa = item.OpCode;
+                var stringa = item.Code;
                 if (stringa == null)
                 {
                     item.OutCode = 0;
@@ -181,7 +181,7 @@ namespace PropertyCrawler.Test
         public void Start()
         {
             var postalCodes = _context.PostalCodes.Where(x => x.Code.Contains("AB10")).ToList();
-            _jobService.Job(postalCodes, PropertyType.All, Data.Entity.ProcessType.Full, false,null);
+            _jobService.Job(postalCodes, PropertyType.All, Data.Entity.ProcessType.Update_Price, false,null, null);
         }
         [TestMethod]
         public void InsertUpdatePortal()
@@ -196,36 +196,61 @@ namespace PropertyCrawler.Test
         [TestMethod]
         public void UpdateUrlPropertyCode()
         {
-            var urls = _context.Urls.ToList();
-            urls.Where(x=>x.Active).ToList().ForEach(x => x.PropertyCode = int.Parse(
-                !string.IsNullOrEmpty(x.PropertyUrl)?
-                string.Join("", Regex.Matches(x.PropertyUrl, @"[0-9]").Select(a => a.Value)):"0"
+            //var urls = _context.Urls.ToList();
+            //urls.Where(x=>x.Active).ToList().ForEach(x => x.PropertyCode = int.Parse(
+            //    !string.IsNullOrEmpty(x.PropertyUrl)?
+            //    string.Join("", Regex.Matches(x.PropertyUrl, @"[0-9]").Select(a => a.Value)):"0"
                 
-                ));
+            //    ));
 
-            _context.Urls.UpdateRange(urls);
-            _context.SaveChanges();
+            //_context.Urls.UpdateRange(urls);
+            //_context.SaveChanges();
         }
         [TestMethod]
         public void UpdateUrl_UrlTypeId()
         {
-            var urlTypes = _context.UrlTypes.ToList();
-            var urls = _context.Urls.ToList();
-            urls.Where(x => x.Active).ToList().ForEach(x => x.UrlTypeId =urlTypes.FirstOrDefault(a=>x.PropertyUrl.Contains(a.UrlPortion)).Id );
-            var partitioner = Partitioner.Create(urls);
-            var parallelOptions = new ParallelOptions
-            {
-                MaxDegreeOfParallelism = Environment.ProcessorCount
-            };
+            //var urlTypes = _context.UrlTypes.ToList();
+            //var urls = _context.Urls.ToList();
+            //urls.Where(x => x.Active).ToList().ForEach(x => x.UrlTypeId =urlTypes.FirstOrDefault(a=>x.PropertyUrl.Contains(a.UrlPortion)).Id );
+            //var partitioner = Partitioner.Create(urls);
+            //var parallelOptions = new ParallelOptions
+            //{
+            //    MaxDegreeOfParallelism = Environment.ProcessorCount
+            //};
 
-            Parallel.ForEach(partitioner, parallelOptions, (listItem, loopState) =>
-            {
-                var _appContext = new PropertyCrawler.Data.AppContext(true);
-                _appContext.Urls.Update(listItem);
-                _appContext.SaveChanges();
-            });
+            //Parallel.ForEach(partitioner, parallelOptions, (listItem, loopState) =>
+            //{
+            //    var _appContext = new PropertyCrawler.Data.AppContext(true);
+            //    _appContext.Urls.Update(listItem);
+            //    _appContext.SaveChanges();
+            //});
 
         }
+
+
+        [TestMethod]
+        public void UpdatePostalCodeOutCode()
+        {
+            //var postalCodes = _context.PostalCodes.Where(x => x.Active && !string.IsNullOrEmpty(x.OpCode)).ToList();
+            //postalCodes.ForEach(x => x.OutCode = int.Parse(
+            //    !string.IsNullOrEmpty(x.OpCode) ?
+            //   x.OpCode.Replace("OUTCODE%5E","") : "0"
+            //    ));
+            //var partitioner = Partitioner.Create(postalCodes);
+            //var parallelOptions = new ParallelOptions
+            //{
+            //    MaxDegreeOfParallelism = Environment.ProcessorCount
+            //};
+
+            //Parallel.ForEach(partitioner, parallelOptions, (listItem, loopState) =>
+            //{
+            //    var _appContext = new Data.AppContext(true);
+            //    _appContext.PostalCodes.Update(listItem);
+            //    _appContext.SaveChanges();
+            //});
+
+        }
+
 
         [TestMethod]
         public void TestMethod2()
@@ -268,14 +293,14 @@ namespace PropertyCrawler.Test
 
             //);
 
-            var urlTypes = appcontext.UrlTypes.ToList();
-            var urls = appcontext.Urls.ToList();
+            //var urlTypes = appcontext.UrlTypes.ToList();
+            //var urls = appcontext.Urls.ToList();
 
-            urls.ForEach(x => x.UrlTypeId = urlTypes.FirstOrDefault(a => x.PropertyUrl.Contains(a.UrlPortion))?.Id ?? 0);
-            appcontext.Urls.UpdateRange(urls);
+            //urls.ForEach(x => x.UrlTypeId = urlTypes.FirstOrDefault(a => x.PropertyUrl.Contains(a.UrlPortion))?.Id ?? 0);
+            //appcontext.Urls.UpdateRange(urls);
            
 
-            appcontext.SaveChanges();
+            //appcontext.SaveChanges();
 
         }
 
@@ -285,7 +310,7 @@ namespace PropertyCrawler.Test
 
         private void LoadDependencies()
         {
-            var con = @"Server=localhost;Database=PropertiesDb;Trusted_Connection=True;";
+            var con = @"Server=.\sqlexpress;Database=PropertiesDb;Trusted_Connection=True;";
             var services = new ServiceCollection();
             services.AddDbContext<Data.AppContext>(opts => opts.UseSqlServer(con));
             services.AddHangfire(x => x.UseSqlServerStorage(con));

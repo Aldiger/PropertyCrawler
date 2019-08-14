@@ -6,9 +6,6 @@ namespace PropertyCrawler.Data
     {
         public string Description { get; set; }
 
-        //[ForeignKey("Property")]
-        public int? PropertyId { get; set; }
-
         public virtual Property Property { get; set; }
     }
 }

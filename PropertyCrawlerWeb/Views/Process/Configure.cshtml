@@ -41,7 +41,8 @@
                             </div>
                             <div class="col">
                                 <label class="col-form-label" for="ip">IP</label>
-                                <input class="form-control" placeholder="Manually fill this field with the IP..." form="ip" />
+                                <select class="form-control" name="proxyIp" id="proxyIp" asp-items="@ViewBag.ProxyIps"></select>
+                                @*<input class="form-control" placeholder="Manually fill this field with the IP..." form="ip" />*@
                             </div>
                         </div>
                         <div class="row form-group" style="padding-top:25px;">

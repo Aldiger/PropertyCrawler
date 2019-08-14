@@ -194,7 +194,7 @@ namespace PropertyCrawler
                         }
                         opCode = opCode.Replace("^", "%5E");
 
-                        cod.OpCode = opCode;
+                        //cod.OpCode = opCode;
                         cod.DateModified = DateTime.Now;
                         context.PostalCodes.Update(cod);
 
@@ -228,7 +228,7 @@ namespace PropertyCrawler
                             linksList.Add(item.Attributes["href"].Value);
                         }
                         linksList = linksList.Distinct().ToList();
-                        var urls = linksList.Select(x => new Url { PropertyUrl = x, Type = 1, PortalId = 1, DateModified = DateTime.Now, DateAdded = DateTime.Now, Active = true, PostalCodeId = cod.Id });
+                        var urls = linksList.Select(x => new Url { /*PropertyUrl = x, */Type = 1, PortalId = 1, DateModified = DateTime.Now, DateAdded = DateTime.Now, Active = true, PostalCodeId = cod.Id });
                         context.Urls.AddRange(urls);
                         context.SaveChanges();
                     }
@@ -260,7 +260,7 @@ namespace PropertyCrawler
                     client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36");
                     client.DefaultRequestHeaders.Add("Accept-Language", "en-US,en;q=0.9,it;q=0.8,sq;q=0.7");
 
-                    var links = client.GetStringAsync(basedUrl+url.PropertyUrl).Result;
+                    var links = client.GetStringAsync(basedUrl/*+url.PropertyUrl*/).Result;
                     HtmlDocument document = new HtmlDocument();
                     document.LoadHtml(links);
                     if (document.DocumentNode.InnerText.Contains("This property has been removed by the agent.")
@@ -441,7 +441,7 @@ namespace PropertyCrawler
                         //context.PostalCodes.Update(cod);
 
                         var page = 0;
-                        var queryString = $"find.html?searchType=RENT&locationIdentifier={cod.OpCode}&index={24 * page}";
+                        var queryString = $"find.html?searchType=RENT&locationIdentifier={cod.Code}&index={24 * page}";
                         var links = client.GetStringAsync(basedUrl + queryString).Result;
                         HtmlDocument documentlinks = new HtmlDocument();
                         documentlinks.LoadHtml(links);
@@ -455,7 +455,7 @@ namespace PropertyCrawler
                         {
                             try
                             {
-                                queryString = $"find.html?searchType=SALE&locationIdentifier={cod.OpCode}&index={24 * i}&includeSSTC=false";
+                                queryString = $"find.html?searchType=SALE&locationIdentifier={cod.Code}&index={24 * i}&includeSSTC=false";
 
                                 links = client.GetStringAsync(basedUrl + queryString).Result;
                                 documentlinks = new HtmlDocument();
@@ -478,7 +478,7 @@ namespace PropertyCrawler
                             linksList.Add(item.Attributes["href"].Value);
                         }
                         linksList = linksList.Distinct().ToList();
-                        var urls = linksList.Select(x => new Url { PropertyUrl = x, Type = (int)Data.PropertyType.Rent, PortalId = 1, DateModified = DateTime.Now, DateAdded = DateTime.Now, Active = true, PostalCodeId = cod.Id });
+                        var urls = linksList.Select(x => new Url {/* PropertyUrl = x,*/ Type = (int)Data.PropertyType.Rent, PortalId = 1, DateModified = DateTime.Now, DateAdded = DateTime.Now, Active = true, PostalCodeId = cod.Id });
                         context.Urls.AddRange(urls);
                         context.SaveChanges();
                     }

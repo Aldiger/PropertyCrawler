@@ -6,6 +6,10 @@
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Services\CrawlerService - Copy.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="cloudscribe.Web.Pagination" Version="2.1.9" />

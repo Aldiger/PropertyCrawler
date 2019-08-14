@@ -1,6 +1,4 @@
 ﻿using Hangfire;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using PropertyCrawler.Data;
 using PropertyCrawler.Data.Entity;
 using PropertyCrawler.Data.Repositories;
@@ -13,7 +11,7 @@ namespace PropertyCrawlerWeb.Services
 {
     public interface IJobService
     {
-        Task Job(List<PostalCode> postalCodes, PropertyType type, ProcessType processType, bool isScheduled, ScheduleInterval? scheduleInterval);
+        Task Job(List<PostalCode> postalCodes, PropertyType type, ProcessType processType, bool isScheduled, ScheduleInterval? scheduleInterval, ProxyIp proxyIp);
 
     }
     public class JobService : IJobService
@@ -27,20 +25,9 @@ namespace PropertyCrawlerWeb.Services
         private readonly IProcessRepository _processRepository;
         private PropertyCrawler.Data.AppContext _appContext = new PropertyCrawler.Data.AppContext(true);
 
-        public async Task Job(List<PostalCode> postalCodes, PropertyType propertyType, ProcessType processType, bool isScheduled, ScheduleInterval? scheduleInterval)
+        public async Task Job(List<PostalCode> postalCodes, PropertyType propertyType, ProcessType processType, bool isScheduled, ScheduleInterval? scheduleInterval, ProxyIp proxyIp)
         {
-           // LoadDependencies();
-            var dateNow = DateTime.UtcNow;
-            var process = new Process
-            {
-                DateAdded = dateNow,
-                DateModified=dateNow,
-                Active = true,
-                Status = (int)ProcessStatus.Processing,
-                Type = processType
-            };
-            _appContext.Processes.Add(process);
-            _appContext.SaveChanges();
+            var process = InsertProcess(processType);
 
             if (isScheduled)
             {
@@ -51,31 +38,48 @@ namespace PropertyCrawlerWeb.Services
                     case ScheduleInterval.Monthly:
                         cron = Cron.Monthly();
                         break;
+                    case ScheduleInterval.Daily:
+                        cron = Cron.Daily();
+                        break;
+                    case ScheduleInterval.Once_in_2_Days:
+                        cron = Cron.DayInterval(2);
+                        break;
+                    case ScheduleInterval.Once_in_4_Days:
+                        cron = Cron.DayInterval(4);
+                        break;
+                    case ScheduleInterval.Twice_a_Month:
+                        cron = Cron.DayInterval(15);
+                        break;
+                    case ScheduleInterval.Weekly:
+                        cron = Cron.DayInterval(7);
+                        break;
                     default:
                         break;
                 }
 
                 RecurringJob.AddOrUpdate(
-                    () => Recurrency(postalCodes,propertyType, process),
+                    () => Recurrency(postalCodes,propertyType, process,proxyIp),
                     cron);
             }
             else
             {
-                var jobId = BackgroundJob.Enqueue(() => _crawlerService.PropertiesCrawler(postalCodes, process, propertyType));
-
-
+                var jobId = BackgroundJob.Enqueue(() => _crawlerService.Execute(postalCodes, propertyType, process, proxyIp));
+                if (int.TryParse(jobId, out int temp))
+                {
+                    UpdateProcess(temp, process);
+                }
                 //update process status
                 BackgroundJob.ContinueJobWith(jobId, () => Execute(jobId, process.Id), JobContinuationOptions.OnAnyFinishedState);
-
             }
-
-
         }
-        public void Recurrency(List<PostalCode> postalCodes, PropertyType propertyType, Process process)
+        public void Recurrency(List<PostalCode> postalCodes, PropertyType propertyType, Process process, ProxyIp proxyIp)
         {
-            var jobId = BackgroundJob.Enqueue(() => _crawlerService.PropertiesCrawler(postalCodes, process, propertyType));
+            var jobId = BackgroundJob.Enqueue(() => _crawlerService.Execute(postalCodes, propertyType, process, proxyIp));
 
-
+            if (int.TryParse(jobId, out int temp))
+            {
+                UpdateProcess(temp, process);
+            }
             //update process status
             BackgroundJob.ContinueJobWith(jobId, () => Execute(jobId, process.Id), JobContinuationOptions.OnAnyFinishedState);
         }
@@ -88,45 +92,50 @@ namespace PropertyCrawlerWeb.Services
                 if (job.State == "Succeeded")
                 {
                     process.Status = ProcessStatus.Success;
-                    //var succeeded = connection.GetAllItemsFromSet($"batch:{batchId}:succeeded");
-                    //if (succeeded.Any())
-                    //{
-                    //};
                 }
                 else
                 {
                     process.Status = ProcessStatus.Failed;
-                    process.DateModified = DateTime.UtcNow;
                 }
-                //_processRepository.Update(process, process.Id);
-                _appContext.Processes.Update(process);
-                _appContext.SaveChanges();
+                UpdateProcess(process, process.Status);
             }
 
         }
-        //private void LoadDependencies()
-        //{
-        //    var con = @"Server=.\Sqlexpress;Database=PropertiesDb;Trusted_Connection=True;";
-        //    var services = new ServiceCollection();
-        //    services.AddDbContext<PropertyCrawler.Data.AppContext>(opts => opts.UseSqlServer(con));
-        //    services.AddHangfire(x => x.UseSqlServerStorage(con));
 
+        public Process InsertProcess(ProcessType processType)
+        {
+            var dateNow = DateTime.UtcNow;
+            var process = new Process
+            {
+                DateAdded = dateNow,
+                DateModified = dateNow,
+                Active = true,
+                Retry=0,
+                Status = (int)ProcessStatus.Processing,
+                Type = processType
+            };
+            _appContext.Processes.Add(process);
+            _appContext.SaveChanges();
+            return process;
+        }
 
-        //    services.AddScoped<IPostalCodeRepository, PostalCodeRepository>();
-        //    services.AddScoped<IProcessRepository, ProcessRepository>();
-        //    services.AddScoped<IJobService, JobService>();
-        //    services.AddScoped<ICrawlerService, CrawlerService>();
+        public void UpdateProcess(Process process, ProcessStatus status)
+        {
+            var proc = _appContext.Processes.FirstOrDefault(x=>x.Id==process.Id);
+            proc.Status = status;
+            proc.DateModified = DateTime.UtcNow;
+            _appContext.Processes.Update(proc);
+            _appContext.SaveChanges();
+        }
 
-        //    var serviceProvider = services.BuildServiceProvider();
-
-        //    //_jobService = serviceProvider.GetService<IJobService>();
-        //    _crawlerService = serviceProvider.GetService<ICrawlerService>();
-        //    //_processRepository = serviceProvider.GetService<IProcessRepository>();
-        //    //_postalCodeRepository = serviceProvider.GetService<IPostalCodeRepository>();
-        //    //_context = serviceProvider.GetService<Data.AppContext>();
-
-
-
-        //}
+        public void UpdateProcess(int jobId, Process process)
+        {
+            var proc = _appContext.Processes.FirstOrDefault(x => x.Id == process.Id);
+            proc.JobId = jobId;
+            proc.DateModified = DateTime.UtcNow;
+            proc.Retry = proc.Retry.HasValue ? ++proc.Retry : 1;
+            _appContext.Processes.Update(proc);
+            _appContext.SaveChanges();
+        }
     }
 }
