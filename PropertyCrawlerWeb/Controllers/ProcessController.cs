@@ -34,7 +34,7 @@ namespace PropertyCrawlerWeb.Controllers
         public async Task<IActionResult> Configure()
         {
             var lista = await _repoPostalCode.AllPostalCodesSelect();
-            var proxyIps = _context.ProxyIps.Where(x=>x.Active).Select(x=>x.Ip).ToList();
+            var proxyIps = _context.ProxyIps.Where(x=>x.Active).Select(x=>String.IsNullOrWhiteSpace(x.Port) ? x.Ip: x.Ip+":"+x.Port).ToList();
             ViewBag.ProxyIps = new SelectList(proxyIps, "Text");
             
             ViewBag.Postal = new SelectList(lista, "Text");

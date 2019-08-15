@@ -28,7 +28,7 @@ namespace PropertyCrawlerWeb.Services
         public async Task Job(List<PostalCode> postalCodes, PropertyType propertyType, ProcessType processType, bool isScheduled, ScheduleInterval? scheduleInterval, ProxyIp proxyIp)
         {
             var process = InsertProcess(processType, propertyType);
-
+            
             if (isScheduled)
             {
 

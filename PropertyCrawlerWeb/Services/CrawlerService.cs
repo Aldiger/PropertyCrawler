@@ -360,7 +360,7 @@ namespace PropertyCrawlerWeb.Services
 
             var proxy = new WebProxy()
             {
-                Address = new Uri($"http://{proxyIp.Ip}"),
+                Address = String.IsNullOrWhiteSpace(proxyIp.Port) ? new Uri($"http://{proxyIp.Ip}"): new Uri($"http://{proxyIp.Ip}:{proxyIp.Port}"),
                 BypassProxyOnLocal = false,
                 UseDefaultCredentials = false,
 
