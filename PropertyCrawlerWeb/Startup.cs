@@ -84,6 +84,8 @@ namespace PropertyCrawlerWeb
                 app.UseHsts();
             }
             app.UseHangfireServer();
+            app.UseAuthentication();
+
             app.UseHangfireDashboard("/hangfire", new DashboardOptions
             {
                 Authorization = new[] { new HangfireAuthorizationFilter() },
@@ -93,7 +95,7 @@ namespace PropertyCrawlerWeb
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseAuthentication();
+            
 
             app.UseMvc(routes =>
             {
@@ -110,8 +112,13 @@ namespace PropertyCrawlerWeb
         public bool Authorize([NotNull]DashboardContext context)
         {
             var httpContext = context.GetHttpContext();
-            //var authService = httpContext.RequestServices.GetRequiredService<IAuthorizationService>();
-            return true;//httpContext.User.Identity.IsAuthenticated;
+            if (httpContext.User.IsInRole("Admin") || httpContext.User.IsInRole("User") || httpContext.User.IsInRole("PowerUser") || httpContext.User.Identity.IsAuthenticated)
+            {
+                return true;
+            }
+            return false;
+            ////var authService = httpContext.RequestServices.GetRequiredService<IAuthorizationService>();
+            //return true;//httpContext.User.Identity.IsAuthenticated;
         }
 
     }
