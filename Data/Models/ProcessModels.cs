@@ -23,7 +23,7 @@ namespace PropertyCrawler.Data.Models
         public ProcessType Type { get; set; }
         public ProcessStatus Status { get; set; }
 
-        public PropertyType PropertyType { get; set; }
+        public string PropertyType { get; set; }
 
         public List<string> PostalCode { get; set; }
         public List<string> FailUrl { get; set; }

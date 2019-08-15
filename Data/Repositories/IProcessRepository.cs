@@ -37,7 +37,7 @@ namespace PropertyCrawler.Data.Repositories
                 // url failed list
                 DateAdded = z.DateAdded,
                 DateModified = z.DateModified,
-                PropertyType = z.PropertyType,
+                PropertyType = Enum.GetName(typeof(PropertyType), z.PropertyType),
                 Status = z.Status,
                 Type = z.Type
 

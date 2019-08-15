@@ -99,13 +99,14 @@
                     <div class="col text-center">
                         <div class="btn-group dropright">
                             <div>
-                                <button class="btn btn-outline-primary  dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Postal Codes</button>
-                                <div class="dropdown-menu">
+                               
+                                <div>
                                     @foreach (var item in Model.PostalCode)
                                     {
-                                        <a class="dropdown-item">@item</a>
+                                    <span class="badge badge-secondary">@item</span>
+                                        @*<a class="dropdown-item">@item</a>*@
                                     }
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -122,7 +123,7 @@
                         <a asp-action="Configure" class="btn btn-sm btn-outline-primary" style="padding:6px 40px;">Configure new Process</a>
                     </div>
                     <div class="col text-right">
-                        <a asp-action="List" class="btn btn-sm btn-outline-primary" style="padding:6px 40px;">
+                        <a asp-controller="Process" asp-action="Index" class="btn btn-sm btn-outline-primary" style="padding:6px 40px;">
                             Back to List
                         </a>
                     </div>

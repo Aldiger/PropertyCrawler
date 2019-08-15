@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
-                            <div class="col">Proxy Ips List</div>
+                            <div class="col"><strong>Proxy Ips List</strong></div>
                             <div class="col text-right"> <a class="btn btn-outline-primary" asp-action="Create">Create New</a></div>
                         </div>
 
@@ -22,12 +22,13 @@
                             <thead>
                                 <tr>
                                     <th> @Html.DisplayNameFor(model => model.Ip)</th>
-                                    <th>  @Html.DisplayNameFor(model => model.Port)</th>
-                                    <th>  @Html.DisplayNameFor(model => model.Username)</th>
+                                    <th> @Html.DisplayNameFor(model => model.Port)</th>
+                                    <th> @Html.DisplayNameFor(model => model.Username)</th>
                                     <th> @Html.DisplayNameFor(model => model.Password)</th>
                                     <th> @Html.DisplayNameFor(model => model.DateAdded)</th>
                                     <th> @Html.DisplayNameFor(model => model.DateModified)</th>
                                     <th> @Html.DisplayNameFor(model => model.Active)</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
