@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PropertyCrawler.Data;
 using PropertyCrawler.Data.Entity;
+using PropertyCrawler.Data.Repositories;
 using AppContext = PropertyCrawler.Data.AppContext;
 
 namespace PropertyCrawlerWeb.Controllers
@@ -14,16 +15,18 @@ namespace PropertyCrawlerWeb.Controllers
     public class ProxyIpsController : Controller
     {
         private readonly AppContext _context;
-
-        public ProxyIpsController(AppContext context)
+        private readonly IProxyIPsRepository _proxyIpsRepo;
+        public ProxyIpsController(AppContext context, IProxyIPsRepository proxyIpsRepo)
         {
             _context = context;
+            _proxyIpsRepo = proxyIpsRepo;
         }
 
         // GET: ProxyIps
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ProxyIps.ToListAsync());
+            var proxyIps = await _proxyIpsRepo.GetProxyIpsAsync();
+            return View(proxyIps);
         }
 
         // GET: ProxyIps/Details/5
@@ -34,8 +37,7 @@ namespace PropertyCrawlerWeb.Controllers
                 return NotFound();
             }
 
-            var proxyIp = await _context.ProxyIps
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var proxyIp = await _proxyIpsRepo.GetProxyIpDetailsAsync(id.Value);
             if (proxyIp == null)
             {
                 return NotFound();
@@ -61,8 +63,7 @@ namespace PropertyCrawlerWeb.Controllers
             {
                 proxyIp.DateAdded = DateTime.Now;
                 proxyIp.DateModified = DateTime.Now;
-                _context.Add(proxyIp);
-                await _context.SaveChangesAsync();
+                await _proxyIpsRepo.CreateProxyIp(proxyIp);
                 return RedirectToAction(nameof(Index));
             }
             return View(proxyIp);
@@ -76,7 +77,7 @@ namespace PropertyCrawlerWeb.Controllers
                 return NotFound();
             }
 
-            var proxyIp = await _context.ProxyIps.FindAsync(id);
+            var proxyIp = await _proxyIpsRepo.GetProxyIpAsync(id.Value);
             if (proxyIp == null)
             {
                 return NotFound();
@@ -101,8 +102,7 @@ namespace PropertyCrawlerWeb.Controllers
                 try
                 {
                     proxyIp.DateModified = DateTime.Now;
-                    _context.Update(proxyIp);
-                    await _context.SaveChangesAsync();
+                    await _proxyIpsRepo.EditProxyIp(proxyIp);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -128,8 +128,7 @@ namespace PropertyCrawlerWeb.Controllers
                 return NotFound();
             }
 
-            var proxyIp = await _context.ProxyIps
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var proxyIp = await _proxyIpsRepo.GetProxyIpAsync(id.Value);
             if (proxyIp == null)
             {
                 return NotFound();
@@ -143,9 +142,7 @@ namespace PropertyCrawlerWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var proxyIp = await _context.ProxyIps.FindAsync(id);
-            _context.ProxyIps.Remove(proxyIp);
-            await _context.SaveChangesAsync();
+            await _proxyIpsRepo.DeleteProxyIp(id);
             return RedirectToAction(nameof(Index));
         }
 

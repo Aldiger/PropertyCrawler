@@ -58,6 +58,7 @@ namespace PropertyCrawlerWeb
 
             services.AddScoped<IPostalCodeRepository, PostalCodeRepository>();
             services.AddScoped<IProcessRepository, ProcessRepository>();
+            services.AddScoped<IProxyIPsRepository, ProxyIPsRepository>();
             services.AddScoped<ICrawlerService, CrawlerService>();
             services.AddScoped<IJobService, JobService>();
 
