@@ -58,12 +58,12 @@ namespace PropertyCrawlerWeb.Services
                 }
 
                 RecurringJob.AddOrUpdate(
-                    () => Recurrency(postalCodes,propertyType, process,proxyIp),
+                    () => Recurrency(postalCodes,propertyType, process,proxyIp, processType),
                     cron);
             }
             else
             {
-                var jobId = BackgroundJob.Enqueue(() => _crawlerService.Execute(postalCodes, propertyType, process, proxyIp));
+                var jobId = BackgroundJob.Enqueue(() => _crawlerService.Execute(postalCodes, propertyType, process, proxyIp, processType));
                 if (int.TryParse(jobId, out int temp))
                 {
                     UpdateProcess(temp, process);
@@ -72,9 +72,9 @@ namespace PropertyCrawlerWeb.Services
                 BackgroundJob.ContinueJobWith(jobId, () => Execute(jobId, process.Id), JobContinuationOptions.OnAnyFinishedState);
             }
         }
-        public void Recurrency(List<PostalCode> postalCodes, PropertyType propertyType, Process process, ProxyIp proxyIp)
+        public void Recurrency(List<PostalCode> postalCodes, PropertyType propertyType, Process process, ProxyIp proxyIp, ProcessType processType)
         {
-            var jobId = BackgroundJob.Enqueue(() => _crawlerService.Execute(postalCodes, propertyType, process, proxyIp));
+            var jobId = BackgroundJob.Enqueue(() => _crawlerService.Execute(postalCodes, propertyType, process, proxyIp, processType));
 
             if (int.TryParse(jobId, out int temp))
             {

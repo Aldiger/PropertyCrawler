@@ -20,27 +20,27 @@ namespace PropertyCrawlerWeb.Services
 {
     public interface ICrawlerService
     {
-        void Execute(List<PostalCode> postalCodes, PropertyType type, Process process, ProxyIp proxy);
+        void Execute(List<PostalCode> postalCodes, PropertyType type, Process process, ProxyIp proxy, ProcessType processType);
         //void UrlCrawler(List<PostalCode> postalCodes, PropertyType type, Process process);
         //void PropertiesCrawler(List<PostalCode> postalCodes, Process process, PropertyType type);
-        void UpdatePriceUrlCrawler(List<PostalCode> postalCodes, PropertyType type, Process process, ProxyIp proxy);
+        void UpdatePriceUrlCrawler(List<PostalCode> postalCodes, PropertyType type, Process process, ProxyIp proxy, ProcessType processType);
     }
     public class CrawlerService : ICrawlerService
     {
 
-        public void Execute(List<PostalCode> postalCodes, PropertyType type, Process process, ProxyIp proxy)
+        public void Execute(List<PostalCode> postalCodes, PropertyType type, Process process, ProxyIp proxy, ProcessType processType)
         {
             if (ProcessType.LastWeek == process.Type)
             {
-                UpdatePriceUrlCrawler(postalCodes, type, process, proxy);
+                UpdatePriceUrlCrawler(postalCodes, type, process, proxy, processType);
             }
             else if (ProcessType.LastTwoWeeks == process.Type)
             {
-                UpdatePriceUrlCrawler(postalCodes, type, process, proxy);
+                UpdatePriceUrlCrawler(postalCodes, type, process, proxy, processType);
             }
             else
             {
-                UpdatePriceUrlCrawler(postalCodes, type, process, proxy);
+                UpdatePriceUrlCrawler(postalCodes, type, process, proxy, processType);
             }
         }
 
@@ -310,7 +310,7 @@ namespace PropertyCrawlerWeb.Services
 
         #region Update Price
 
-        public void UpdatePriceUrlCrawler(List<PostalCode> postalCodes, PropertyType type, Process process, ProxyIp proxy)
+        public void UpdatePriceUrlCrawler(List<PostalCode> postalCodes, PropertyType type, Process process, ProxyIp proxy, ProcessType processType)
         {
             var _appContext = new PropertyCrawler.Data.AppContext(true);
 
@@ -330,12 +330,12 @@ namespace PropertyCrawlerWeb.Services
                 {
                     if (type == PropertyType.All)
                     {
-                        ProcessUpdatePriceUrl(portal, listItem, PropertyType.Sell, urlTypes, processPostalCode,proxy);
-                        ProcessUpdatePriceUrl(portal, listItem, PropertyType.Rent, urlTypes, processPostalCode,proxy);
+                        ProcessUpdatePriceUrl(portal, listItem, PropertyType.Sell, urlTypes, processPostalCode,proxy, processType);
+                        ProcessUpdatePriceUrl(portal, listItem, PropertyType.Rent, urlTypes, processPostalCode,proxy, processType);
                     }
                     else
                     {
-                        ProcessUpdatePriceUrl(portal, listItem, type, urlTypes, processPostalCode,proxy);
+                        ProcessUpdatePriceUrl(portal, listItem, type, urlTypes, processPostalCode,proxy, processType);
                     }
                     UpdateProcess(processPostalCode, ProcessStatus.Success);
                 }
@@ -346,7 +346,7 @@ namespace PropertyCrawlerWeb.Services
             });
         }
 
-        public void ProcessUpdatePriceUrl(Portal portal, PostalCode postalCode, PropertyType propertyType, List<UrlType> urlTypes, ProcessPostalCode processPostalCode, ProxyIp proxyIp)
+        public void ProcessUpdatePriceUrl(Portal portal, PostalCode postalCode, PropertyType propertyType, List<UrlType> urlTypes, ProcessPostalCode processPostalCode, ProxyIp proxyIp, ProcessType processType)
         {
             var _appContext = new PropertyCrawler.Data.AppContext(true);
 
@@ -398,7 +398,15 @@ namespace PropertyCrawlerWeb.Services
                     client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36");
                     client.DefaultRequestHeaders.Add("Accept-Language", "en-US,en;q=0.9,it;q=0.8,sq;q=0.7");
                     var page = 0;
-                    var queryString = $"/find.html?locationIdentifier={portal.OutCodeKey + postalCode.OutCode}&sortType=10&propertyTypes=&includeLetAgreed=false&mustHave=&dontShow=&furnishTypes=&keywords=";
+                var queryString = $"/find.html?locationIdentifier={portal.OutCodeKey + postalCode.OutCode}&sortType=10&propertyTypes=&includeLetAgreed=false&mustHave=&dontShow=&furnishTypes=&keywords=";
+
+                if (processType.ToString() == "LastWeek") {
+                    queryString += "&maxDaysSinceAdded=7";
+                }
+                else if (processType.ToString() == "LastTwoWeeks")
+                {
+                    queryString += "&maxDaysSinceAdded=14";
+                } 
 
                     var pagesHtml = client.GetStringAsync(portal.Url + urlType + queryString).Result;
                     HtmlDocument pagesDocument = new HtmlDocument();
